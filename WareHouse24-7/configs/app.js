@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 /* ----- IMPORT ROUTES ----- */
 const serviceRoutes = require('../src/service/service.routes');
 const userRoutes = require('../src/user/user.routes');
-const wineyRoutes = require('../src/winery/winey.routes');
+const wineyRoutes = require('../src/warehouse/warehouse.routes');
 const branchRoutes = require('../src/branch/branch.routes');
 
 /* ----- CONFIG SERVER ----- */
@@ -21,7 +21,7 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use('/service', serviceRoutes);
 app.use('/user', userRoutes);
-app.use('/winey', wineyRoutes);
+app.use('/warehouse', wineyRoutes);
 app.use('/branch', branchRoutes);
 
 /* ----- STAR SERVER ----- */
