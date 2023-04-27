@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const winerySchema = mongoose.Schema({
+const wareHouseSchema = mongoose.Schema({
     type: {
         type: String,
         required: true
@@ -56,4 +56,4 @@ const winerySchema = mongoose.Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('Winerie', winerySchema);
+module.exports = mongoose.model('WareHouse', wareHouseSchema);

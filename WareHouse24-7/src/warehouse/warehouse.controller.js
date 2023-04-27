@@ -1,5 +1,5 @@
 'use strict'
 
 exports.test = (req, res) => {
-    res.send({ message: `Hi Wineries` });
+    res.send({ message: `Hi Warehouses` });
 }
