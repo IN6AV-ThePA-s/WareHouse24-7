@@ -5,7 +5,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan')
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3022;
 
 /* ----- IMPORT ROUTES ----- */
 const serviceRoutes = require('../src/service/service.routes');

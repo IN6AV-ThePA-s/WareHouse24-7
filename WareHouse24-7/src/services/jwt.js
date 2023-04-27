@@ -11,10 +11,12 @@ exports.createToken = async(user) => {
             username: user.username,
             email: user.email,
             role: user.role,
-            iat: Date.now(),
+            iat: Math.floor(Date.now()/1000),
             exp: Math.floor(Date.now() + ((1000 * 60) * 120)) // 2hr
         }
-        await jwt.sign(payload, `${process.env.KEY_DECODE}`);
+
+        return jwt.sign(payload, `${process.env.KEY_DECODE}`);
+
     } catch (err) {
         console.error(err);
         return err;
