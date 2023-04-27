@@ -51,6 +51,9 @@ const wareHouseSchema = mongoose.Schema({
     lessee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    photo: {
+        type: String,
     }
 }, {
     versionKey: false

@@ -61,6 +61,9 @@ const branchSchema = mongoose.Schema({
                 required: true
             }
         }]
+    },
+    photo: {
+        type: String,
     }
 }, {
     versionKey: false
