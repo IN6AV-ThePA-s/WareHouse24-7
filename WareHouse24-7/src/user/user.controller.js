@@ -36,6 +36,9 @@ exports.test = (req, res) => {
 exports.register = async(req, res) => {
     try {
         let data = req.body
+
+        let msg = validateData({password: data.password})
+        if(msg) return res.status(400).send({message: 'Please introduce a password'})
         data.password = await encrypt(data.password)
         data.role = 'CLIENT'
 
