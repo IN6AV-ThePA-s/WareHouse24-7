@@ -5,8 +5,20 @@
 
 .brush {
   font-family: Brush;
-  font-size: 50px;
+  font-size: 1.5rem;
+  text-align: center;
+  justify-content: center;
+  color: #1751bd;
+  text-decoration: none;
+  cursor: default;
 } 
+
+.bottom-element {
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  text-align: center;
+}
 
 body {
   font-size: .875rem;
