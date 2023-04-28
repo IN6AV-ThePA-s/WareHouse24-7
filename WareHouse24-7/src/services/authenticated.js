@@ -31,3 +31,14 @@ exports.isAdmin = (req, res, next) => {
         return res.status(500).send({message: 'Error, unauthorized user :(', error: err})
     }
 }
+
+exports.isWorker = (req, res, next) => {
+    try {
+        let user = req.user
+        if(user.role !== 'WORKER' && user.role !== 'ADMIN') return res.status(403).send({message: 'Unauthorized user'})
+        next()
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'Error, unauthorized user :(', error: err, user: `${req.user.role}`})
+    }
+}
