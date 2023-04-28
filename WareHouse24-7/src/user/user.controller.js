@@ -3,6 +3,8 @@
 const User = require('../user/user.model');
 const { encrypt, validateData, check } = require('../utils/validate');
 const { createToken } = require('../services/jwt')
+const fs = require('fs')
+const path = require('path')
 
 /* ----- DEFAULT USER ----- */
 exports.defaultUser = async() => {
@@ -32,27 +34,6 @@ exports.test = (req, res) => {
     res.send({ message: `Hi users` });
 }
 
-/* ----- REGISTER CLIENT ----- */
-exports.register = async(req, res) => {
-    try {
-        let data = req.body
-
-        let msg = validateData({password: data.password})
-        if(msg) return res.status(400).send({message: 'Please introduce a password'})
-        data.password = await encrypt(data.password)
-        data.role = 'CLIENT'
-
-        let user = new User(data)
-        await user.save()
-
-        return res.send({message: 'Account created successfully'})
-
-    } catch (err) {
-        console.error(err)
-        return res.status(500).send({message: 'Error creating account', error: err})
-    }
-}
-
 /* ----- LOGIN ----- */
 exports.login = async(req, res) => {
     try {
@@ -62,7 +43,8 @@ exports.login = async(req, res) => {
 
         if(msg) return res.status(400).send({message: msg})
 
-        let user = await User.findOne({username: data.username})
+        let user = await User.findOne({$and: [{username: data.username}, {$or: [{role: 'ADMIN'}, {role: 'WORKER'}]}]})
+        if(!user) return res.status(401).send({message: 'Unauthorized :('})
 
         if(user && await check(data.password, user.password)) {
             let token = await createToken(user)
@@ -143,12 +125,13 @@ exports.updatePassword = async(req, res) => {
     }
 }
 
-
-/* ----- SAVE USER - ADMIN ----- */
-exports.save = async(req, res) => {
+/* ----- ADD ACCOUNT - ADMIN ----- */
+exports.addAccount = async(req, res) => {
     try {
         let data = req.body
         data.password = await encrypt(data.password)
+        data.role = data.role.toUpperCase()
+        if(!data.role || data.role == '' || (data.role !== 'CLIENT' && data.role !== 'WORKER')) return res.status(400).send({message: 'Invalid param "ROLE"'})
         
         let params = {
             names: data.names,
@@ -219,5 +202,63 @@ exports.updateUser = async(req, res) => {
     } catch (err) {
         console.error(err)
         return res.status(500).send({message: 'Error updating userd', error: err})
+    }
+}
+
+/* ----- UPLOAD PHOTO ----- */
+exports.uploadImg = async(req, res) => {
+    try {
+        const userId = req.params.id
+        const alreadyImage = await User.findOne({_id: userId})
+        let pathFile = './src/uploads/users/'
+
+        if(alreadyImage.photo) fs.unlinkSync(`${pathFile}${alreadyImage.photo}`)
+        if(!req.files.image || !req.files.image.type) return res.status(400).send({message: 'Have not sent an image'}) 
+
+        const filePath = req.files.image.path
+        
+        const fileSplit = filePath.split('\\')
+        const fileName = fileSplit[3]
+
+        const extension = fileName.split('\.')
+        const fileExt = extension[1]
+
+        if(
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg'
+        ){
+            const updatedUser = await User.findOneAndUpdate(
+                {_id: userId},
+                {photo: fileName},
+                {new: true}
+            )
+            if(!updatedUser) return res.status(404).send({message: 'User not found and not updated'})
+            return res.send({message: 'User updated', updatedUser})
+        }
+
+        fs.unlinkSync(filePath)
+        return res.status(400).send({message: 'File extension not admited'})
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'Error uploading image', error: err})
+    }
+}
+
+/* ----- GET USER PHOTO ----- */
+exports.getImg = async(req, res) => {
+    try {
+        const fileName = req.params.file
+        const pathFile = `./src/uploads/users/${fileName}`
+        const image = fs.existsSync(pathFile)
+        
+        if(!image) return res.status(404).send({message: 'Image not found ;('})
+        
+        return res.sendFile(path.resolve(pathFile))
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'Error getting image', error: err})
     }
 }

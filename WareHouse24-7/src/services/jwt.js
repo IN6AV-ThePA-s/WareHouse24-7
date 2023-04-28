@@ -11,8 +11,8 @@ exports.createToken = async(user) => {
             username: user.username,
             email: user.email,
             role: user.role,
-            iat: Math.floor(Date.now()/1000),
-            exp: Math.floor(Date.now() + ((1000 * 60) * 120)) // 2hr
+            iat: Math.floor(Date.now() / 1000),
+            exp: Math.floor(Date.now() / 1000) + (60 * 120) // 2hr
         }
 
         return jwt.sign(payload, `${process.env.KEY_DECODE}`);
