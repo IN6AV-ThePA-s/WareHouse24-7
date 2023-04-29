@@ -18,10 +18,10 @@ export const Index = () => {
                     path: '/',
                     element: <HomePage/>
                 },
-                /* {
+                {
                     path: '/about',
                     element: <AboutUsPage/>
-                }, */
+                },
                 /* {
                     path: 'login',
                     element

@@ -4,8 +4,13 @@
 }
 
 @font-face {
-    font-family: Lemonmilk;
+    font-family: LemonmilkBold;
     src: url('../../fonts/LEMONMILK-Bold.otf');
+}
+
+@font-face {
+    font-family: LemonmilkRegular;
+    src: url('../../fonts/LEMONMILK-Regular.otf');
 }
 
 @font-face {
@@ -20,7 +25,14 @@
 }
 
 .h1247{
-    font-family: Lemonmilk;
+    font-family: LemonmilkBold;
+    font-size: calc(2em + 2vw);
+    border-bottom: 5px solid #8cc044;
+    color: #fff;
+}
+
+.h2247{
+    font-family: LemonmilkRegular;
     font-size: calc(2em + 2vw);
     color: #fff;
 }
@@ -28,6 +40,25 @@
 .p247{
     font-family: Mono;
     color: #fff;
+}
+
+.aboutimg{
+    box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.221);
+    transition: 0.3s;
+    -webkit-filter: blur(1.5px);
+   -moz-filter: blur(1.5px);
+   -o-filter: blur(1.5px);
+   -ms-filter: blur(1.5px);
+   filter: blur(1.5px);
+}
+
+.aboutimg:hover{
+    box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.304);
+    -webkit-filter: blur(0px);
+   -moz-filter: blur(0px);
+   -o-filter: blur(0px);
+   -ms-filter: blur(0px);
+   filter: blur(0px);
 }
 
 /* Custom default button */

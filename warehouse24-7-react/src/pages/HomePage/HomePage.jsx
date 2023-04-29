@@ -1,6 +1,7 @@
 import React from 'react'
 import './homeStyle.css'
 import logo from '../../assets/logo.png'
+import { Link } from 'react-router-dom'
 
 
 export const HomePage = () => {
@@ -12,9 +13,9 @@ export const HomePage = () => {
                     <div>
                         <h3 className="h3247 float-md-start mb-0">WH24/7 <img src={logo} width='50rem' height='50rem'/></h3>
                         <nav className="nav nav-masthead justify-content-center float-md-end">
-                            <a className="nav-link fw-bold py-1 px-0 active" aria-current="page" href="#">Home</a>
-                            <a className="nav-link fw-bold py-1 px-0" href="#">About Us</a>
-                            <a className="nav-link fw-bold py-1 px-0" href="#">Login</a>
+                            <Link className="nav-link fw-bold py-1 px-0" to='/'>Home</Link>
+                            <Link className="nav-link fw-bold py-1 px-0" to="/about">About Us</Link>
+                            <Link className="nav-link fw-bold py-1 px-0" href="#">Login</Link>
                         </nav>
                     </div>
                 </header>
@@ -25,7 +26,7 @@ export const HomePage = () => {
                         Find a perfect <strong>Warehouse</strong> to start your business.
                     </p>
                     <p className="lead">
-                        <a href="#" className="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
+                        <Link href="#" className="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</Link>
                     </p>
                 </main>
 
