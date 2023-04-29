@@ -10,7 +10,7 @@ export const UserPage = () => {
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 className="h2">Users</h1>
                 <Link to='/dashboard/addUser'>
-                    <button className='btn btn-success me-5 bi bi-plus-circle'> Add User</button>
+                    <button className='btn btn-success border border-dark me-5 bi bi-plus-circle'> Add User</button>
                 </Link>
                 
             </div>
@@ -37,8 +37,8 @@ export const UserPage = () => {
                             <td>gmatta-2021223</td>
                             <td><img src={logo} width='50rem' height='50rem' /></td>
                             <td className='text-center'>
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
+                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
                             </td>
                         </tr>
                         <tr>
@@ -49,8 +49,8 @@ export const UserPage = () => {
                             <td>gmatta-2021223</td>
                             <td><img src={photo} width='50rem' height='50rem' /></td>
                             <td className='text-center'>
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
+                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
                             </td>
                         </tr>
                         <tr>
@@ -61,8 +61,8 @@ export const UserPage = () => {
                             <td>gmatta-2021223</td>
                             <td><img src={photo} width='50rem' height='50rem' /></td>
                             <td className='text-center'>
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
+                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
                             </td>
                         </tr>
 
