@@ -3,34 +3,31 @@ import '../../css/bootstrap.min.css'
 import '../DashboardPage/styleDashboard.css'
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
+import photo from '../../assets/property-1.jpg'
+import { Outlet } from 'react-router-dom'
 
 export const Dashboard = () => {
-    const [open, setOpen]=useState(false)
+    const [open, setOpen] = useState(false)
     return (
         <>
 
             <header className="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow sticky-top justify-content align-items-center">
                 {/* <img className='ms-3' src={logo} width='35px' height='35px' /> */}
-                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{backgroundColor: '#ffffff'}}>
+                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{ backgroundColor: '#ffffff' }}>
                     <Link className="brush">WH 24/7</Link>
                 </div>
-                <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" onClick={()=>setOpen(!open)}
-                     aria-controls="sidebarMenu" aria-expanded="false"
+                <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" onClick={() => setOpen(!open)}
+                    aria-controls="sidebarMenu" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                {/* <div className="navbar-nav">
-                    <div className="nav-item text-nowrap">
-                        <a className="nav-link px-3" href="#">Sign out</a>
-                    </div>
-                </div> */}
-                
+
             </header>
 
             <div className="container-fluid">
                 <div className="row">
 
-                    <nav id="sidebarMenu" className={`col-md-3 col-lg-2 d-md-block bg-light sidebar ${open ? 'collapsing' :'collapse'}`} style={open?{height: 'auto'}:{'':''}}>
+                    <nav id="sidebarMenu" className={`col-md-3 col-lg-2 d-md-block bg-light sidebar ${open ? 'collapsing' : 'collapse'}`} style={open ? { height: 'auto' } : { '': '' }}>
                         <div className="position-sticky pt-3 sidebar-sticky">
                             <h5
                                 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-uppercase">
@@ -41,7 +38,7 @@ export const Dashboard = () => {
                             </h5>
                             <ul className="nav flex-column d-flex">
                                 <li className="nav-item">
-                                    <a className="nav-link active bi bi-house-door" aria-current="page" href="#">
+                                    <a className="nav-link bi bi-house-door" aria-current="page" href="#">
                                         <span className="align-text-bottom bi"> </span>
                                         Home
                                     </a>
@@ -59,10 +56,10 @@ export const Dashboard = () => {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link bi bi-person" href="#">
+                                    <Link className="nav-link bi bi-person" to='users'>
                                         <span data-feather="users" className="align-text-bottom"> </span>
                                         Users
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link bi bi-buildings" href="#">
@@ -104,167 +101,253 @@ export const Dashboard = () => {
                                             <span data-feather="file-text" className="align-text-bottom"></span>
                                             Year-end sale
                                         </a>
-                                    </li>    
-                                </div>  
+                                    </li>
+                                </div>
                                 <div className='fixed-bottom'>
                                     <li className="nav-item">
                                         <a className="nav-link" href="#">
                                             <span data-feather="file-text" className="align-text-bottom"></span>
                                             Log Out
                                         </a>
-                                    </li> 
+                                    </li>
                                 </div>
-                            </ul> 
+                            </ul>
                         </div>
                     </nav>
 
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                        <div
+
+                        <Outlet/>
+                        {/* <div
                             className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                            <h1 className="h2">Dashboard</h1>
-                            {/* <div className="btn-toolbar mb-2 mb-md-0">
-                                <div className="btn-group me-2">
-                                    <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                                    <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                                </div>
-                                <button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
-                                    <span data-feather="calendar" className="align-text-bottom"></span>
-                                    This week
-                                </button>
-                            </div> */}
+                            <h1 className="h2">Users</h1>
+                            <button className='btn btn-success me-5 bi bi-plus-circle'> Add User</button>
                         </div>
 
-                        <canvas className="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-                        {/* <h2>Section title</h2>
                         <div className="table-responsive">
-                            <table className="table table-striped table-sm">
+                            <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Header</th>
-                                        <th scope="col">Header</th>
-                                        <th scope="col">Header</th>
-                                        <th scope="col">Header</th>
+                                        <th scope="col">Names</th>
+                                        <th scope="col">Surnames</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Photo</th>
+                                        <th scope="col" className='text-center'>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody className='align-middle'>
                                     <tr>
-                                        <td>1,001</td>
-                                        <td>random</td>
-                                        <td>data</td>
-                                        <td>placeholder</td>
-                                        <td>text</td>
+                                        <td>Gerson Aarón</td>
+                                        <td>Matta Aguilar</td>
+                                        <td>12345678</td>
+                                        <td>gmatta-2021223@kinal.edu.gt</td>
+                                        <td>gmatta-2021223</td>
+                                        <td><img src={logo} width='50rem' height='50rem' /></td>
+                                        <td className='text-center'>
+                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>1,002</td>
-                                        <td>placeholder</td>
-                                        <td>irrelevant</td>
-                                        <td>visual</td>
-                                        <td>layout</td>
+                                        <td>Gerson Aarón</td>
+                                        <td>Matta Aguilar</td>
+                                        <td>12345678</td>
+                                        <td>gmatta-2021223@kinal.edu.gt</td>
+                                        <td>gmatta-2021223</td>
+                                        <td><img src={photo} width='50rem' height='50rem' /></td>
+                                        <td className='text-center'>
+                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td>1,003</td>
-                                        <td>data</td>
-                                        <td>rich</td>
-                                        <td>dashboard</td>
-                                        <td>tabular</td>
+                                        <td>Gerson Aarón</td>
+                                        <td>Matta Aguilar</td>
+                                        <td>12345678</td>
+                                        <td>gmatta-2021223@kinal.edu.gt</td>
+                                        <td>gmatta-2021223</td>
+                                        <td><img src={photo} width='50rem' height='50rem' /></td>
+                                        <td className='text-center'>
+                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>1,003</td>
-                                        <td>information</td>
-                                        <td>placeholder</td>
-                                        <td>illustrative</td>
-                                        <td>data</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,004</td>
-                                        <td>text</td>
-                                        <td>random</td>
-                                        <td>layout</td>
-                                        <td>dashboard</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,005</td>
-                                        <td>dashboard</td>
-                                        <td>irrelevant</td>
-                                        <td>text</td>
-                                        <td>placeholder</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,006</td>
-                                        <td>dashboard</td>
-                                        <td>illustrative</td>
-                                        <td>rich</td>
-                                        <td>data</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,007</td>
-                                        <td>placeholder</td>
-                                        <td>tabular</td>
-                                        <td>information</td>
-                                        <td>irrelevant</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,008</td>
-                                        <td>random</td>
-                                        <td>data</td>
-                                        <td>placeholder</td>
-                                        <td>text</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,009</td>
-                                        <td>placeholder</td>
-                                        <td>irrelevant</td>
-                                        <td>visual</td>
-                                        <td>layout</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,010</td>
-                                        <td>data</td>
-                                        <td>rich</td>
-                                        <td>dashboard</td>
-                                        <td>tabular</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,011</td>
-                                        <td>information</td>
-                                        <td>placeholder</td>
-                                        <td>illustrative</td>
-                                        <td>data</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,012</td>
-                                        <td>text</td>
-                                        <td>placeholder</td>
-                                        <td>layout</td>
-                                        <td>dashboard</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,013</td>
-                                        <td>dashboard</td>
-                                        <td>irrelevant</td>
-                                        <td>text</td>
-                                        <td>visual</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,014</td>
-                                        <td>dashboard</td>
-                                        <td>illustrative</td>
-                                        <td>rich</td>
-                                        <td>data</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1,015</td>
-                                        <td>random</td>
-                                        <td>tabular</td>
-                                        <td>information</td>
-                                        <td>text</td>
-                                    </tr>
+                                    
+
                                 </tbody>
                             </table>
-                        </div> */}
+                        </div> */} 
+
                     </main>
+
+                    {/* <div className='col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-wrap mb-3 mt-3'>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
+                            <img src={photo} class="card-img-top" alt="..." />
+
+                            <div class="card-body">
+                                
+                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Size</li>
+                                <li class="list-group-item">Services</li>
+                                <li class="list-group-item">State</li>
+                                <li class="list-group-item">lessee</li>
+                            </ul>
+                            <div class="card-body text-center">
+                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
+                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                            </div>
+                        </div>
+                    </div> */}
+
+
                 </div>
             </div>
         </>
