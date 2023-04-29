@@ -53,14 +53,17 @@ const branchSchema = mongoose.Schema({
         ref: 'User',
         required: true
     },
-    wineries: {
+    warehouses: {
         type: [{
-            winery: {
+            warehouse: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'Winerie',
+                ref: 'WareHouse',
                 required: true
             }
         }]
+    },
+    photo: {
+        type: String,
     }
 }, {
     versionKey: false

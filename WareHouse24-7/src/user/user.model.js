@@ -34,7 +34,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         uppercase: true,
-        enum: ['ADMIN', 'CLIENT', 'WORKER', 'WINERY']
+        enum: ['ADMIN', 'CLIENT', 'WORKER']
+    },
+    photo: {
+        type: String,
     }
 }, {
     versionKey: false

@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-const winerySchema = mongoose.Schema({
+const wareHouseSchema = mongoose.Schema({
     type: {
         type: String,
         required: true
@@ -13,7 +13,7 @@ const winerySchema = mongoose.Schema({
     },
     size: {
         type: {
-            height: {
+            heigth: {
                 type: Number,
                 required: true
             },
@@ -29,7 +29,8 @@ const winerySchema = mongoose.Schema({
                 type: Number,
                 required: true
             }
-        }
+        },
+        required: true
     },
     services: {
         type: [{
@@ -51,9 +52,12 @@ const winerySchema = mongoose.Schema({
     lessee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    photo: {
+        type: String
     }
 }, {
     versionKey: false
 });
 
-module.exports = mongoose.model('Winerie', winerySchema);
+module.exports = mongoose.model('WareHouse', wareHouseSchema);
