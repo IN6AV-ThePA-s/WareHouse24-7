@@ -33,41 +33,41 @@ export const AddUserPage = () => {
                 <div className="row mb-4">
                     <div className="col">
                         <div className="form-outline">
-                            <input type="text" id="form6Example1" className="form-control" placeholder='Enter your names' maxlength="25" />
+                            <input type="text" id="form6Example1" className="form-control" placeholder='Enter your names' maxLength="25" />
                             <label className="form-label" htmlFor="form6Example1">Names</label>
                         </div>
                     </div>
                     <div className="col">
                         <div className="form-outline">
-                            <input type="text" id="form6Example2" className="form-control" placeholder='Enter your surnames' maxlength="25" />
+                            <input type="text" id="form6Example2" className="form-control" placeholder='Enter your surnames' maxLength="25" />
                             <label className="form-label" htmlFor="form6Example2">Surnames</label>
                         </div>
                     </div>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input type="number" className="form-control" placeholder='Enter your username' onChange={handlePhone} value={username} />
+                    <input type="number" className="form-control" placeholder='Enter your phone' onChange={handlePhone} value={username} />
                     <label className="form-label" htmlFor="form6Example3">Phone</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input type="email" className="form-control" placeholder='Enter your username' maxlength="100" />
+                    <input type="email" className="form-control" placeholder='Enter your email' maxLength="100" />
                     <label className="form-label" htmlFor="form6Example4">Email</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input type="password" className="form-control" placeholder='Enter your username' maxlength="100" />
+                    <input type="password" className="form-control" placeholder='Enter your password' maxLength="100" />
                     <label className="form-label" htmlFor="form6Example5">Password</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input type="text" className="form-control" placeholder='Enter your username' maxlength="100" />
+                    <input type="text" className="form-control" placeholder='Enter your username' maxLength="100" />
                     <label className="form-label" htmlFor="form6Example6">Username</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input class="form-control" type="file" id="formFile" />
-                    <label for="formFile" class="form-label">Photo</label>
+                    <input className="form-control" type="file" id="formFile" />
+                    <label htmlFor="formFile" className="form-label">Photo</label>
                 </div>
 
             </form>
