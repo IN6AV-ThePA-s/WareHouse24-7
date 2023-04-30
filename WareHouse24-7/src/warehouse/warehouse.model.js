@@ -13,7 +13,7 @@ const wareHouseSchema = mongoose.Schema({
     },
     size: {
         type: {
-            height: {
+            heigth: {
                 type: Number,
                 required: true
             },
@@ -29,7 +29,8 @@ const wareHouseSchema = mongoose.Schema({
                 type: Number,
                 required: true
             }
-        }
+        },
+        required: true
     },
     services: {
         type: [{
@@ -53,7 +54,7 @@ const wareHouseSchema = mongoose.Schema({
         ref: 'User'
     },
     photo: {
-        type: String,
+        type: String
     }
 }, {
     versionKey: false
