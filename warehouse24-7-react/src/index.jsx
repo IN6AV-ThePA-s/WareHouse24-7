@@ -7,6 +7,7 @@ import { AddUserPage } from './pages/User/AddUserPage'
 import { UserPage } from './pages/User/UserPage'
 import { UpdateUserPage } from './pages/User/UpdateUserPage'
 import { AboutUsPage } from './pages/HomePage/AboutUsPage'
+import { LoginPage } from './pages/HomePage/LoginPage'
 
 export const Index = () => {
     const routes = createBrowserRouter([
@@ -22,10 +23,10 @@ export const Index = () => {
                     path: '/about',
                     element: <AboutUsPage/>
                 },
-                /* {
-                    path: 'login',
-                    element
-                }, */
+                {
+                    path: '/login',
+                    element: <LoginPage/>
+                },
                 {
                     path: '/dashboard',
                     element: <Dashboard/>,
