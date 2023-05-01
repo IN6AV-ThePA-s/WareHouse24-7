@@ -37,7 +37,7 @@ export const LoginPage = () => {
 
                     <div className="form-group mt-3">
 
-                        <button class="btnLogin draw-border">Login</button>
+                        <button className="btnLogin draw-border">Login</button>
                     </div>
                 </main>
             </div>

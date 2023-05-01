@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
-import '../../css/bootstrap.min.css'
+/* import '../../css/bootstrap.min.css' */
 import '../DashboardPage/styleDashboard.css'
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom'
 import photo from '../../assets/property-1.jpg'
 import { Outlet } from 'react-router-dom'
+import { NavbarDashboard } from '../../components/NavbarDashboard'
+import { SidebarDashboard } from '../../components/SidebarDashboard'
 
 export const Dashboard = () => {
     const [open, setOpen] = useState(false)
     return (
         <>
 
+            {/* <NavbarDashboard/> */}
             <header className="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow sticky-top justify-content align-items-center">
-                {/* <img className='ms-3' src={logo} width='35px' height='35px' /> */}
+
                 <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{ backgroundColor: '#ffffff' }}>
                     <Link className="brush">WH 24/7</Link>
                 </div>
@@ -27,33 +30,34 @@ export const Dashboard = () => {
             <div className="container-fluid">
                 <div className="row">
 
+                    {/* <SidebarDashboard/> */}
                     <nav id="sidebarMenu" className={`col-md-3 col-lg-2 d-md-block bg-light sidebar ${open ? 'collapsing' : 'collapse'}`} style={open ? { height: 'auto' } : { '': '' }}>
                         <div className="position-sticky pt-3 sidebar-sticky">
                             <h5
                                 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-uppercase">
                                 <span>Welcome:</span>
-                                <a className="link-secondary" href="#" aria-label="Add a new report">
+                                <Link className="link-secondary" aria-label="Add a new report">
                                     <span data-feather="plus-circle" className="align-text-bottom"></span>
-                                </a>
+                                </Link>
                             </h5>
                             <ul className="nav flex-column d-flex">
                                 <li className="nav-item">
-                                    <a className="nav-link bi bi-house-door" aria-current="page" href="#">
+                                    <Link className="nav-link bi bi-house-door" aria-current="page" >
                                         <span className="align-text-bottom bi"> </span>
                                         Home
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item me-5">
-                                    <a className="nav-link bi bi-shop" href="#">
+                                    <Link className="nav-link bi bi-shop" >
                                         <span data-feather="file" className="align-text-bottom"> </span>
                                         Branchs
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link bi bi-file-bar-graph" href="#">
+                                    <Link className="nav-link bi bi-file-bar-graph" >
                                         <span data-feather="shopping-cart" className="align-text-bottom"> </span>
                                         Services
-                                    </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link bi bi-person" to='users'>
@@ -62,62 +66,31 @@ export const Dashboard = () => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link bi bi-buildings" href="#">
+                                    <Link className="nav-link bi bi-buildings" to='warehouses'>
                                         <span data-feather="users" className="align-text-bottom"> </span>
                                         Warehouse
-                                    </a>
+                                    </Link>
                                 </li>
                             </ul>
-
-                            {/* <h6
-                                className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                                <span>Saved reports</span>
-                                <a className="link-secondary" href="#" aria-label="Add a new report">
-                                    <span data-feather="plus-circle" className="align-text-bottom"></span>
-                                </a>
-                            </h6>
                             <ul className="nav h-50 d-flex flex-column justify-content-between mb-2">
                                 <div>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text" className="align-text-bottom"></span>
-                                            Current month
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text" className="align-text-bottom"></span>
-                                            Last quarter
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text" className="align-text-bottom"></span>
-                                            Social engagement
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text" className="align-text-bottom"></span>
-                                            Year-end sale
-                                        </a>
-                                    </li>
+                                    <div className='fixed-bottom'>
+                                        <li className="nav-item">
+                                            <a className="nav-link" href="#">
+                                                <span data-feather="file-text" className="align-text-bottom"></span>
+                                                Log Out
+                                            </a>
+                                        </li>
+                                    </div>
                                 </div>
-                                <div className='fixed-bottom'>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text" className="align-text-bottom"></span>
-                                            Log Out
-                                        </a>
-                                    </li>
-                                </div>
-                            </ul> */}
+                            </ul>
+
                         </div>
                     </nav>
 
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-                        <Outlet/>
+                        <Outlet />
                         {/* <div
                             className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                             <h1 className="h2">Users</h1>
@@ -178,7 +151,7 @@ export const Dashboard = () => {
 
                                 </tbody>
                             </table>
-                        </div> */} 
+                        </div> */}
 
                     </main>
 
