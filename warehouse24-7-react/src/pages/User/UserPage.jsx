@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import photo from '../../assets/property-1.jpg'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card } from '../../components/Card'
+import { Card } from '../../components/CardUser'
 import axios from 'axios'
 
 export const UserPage = () => {
