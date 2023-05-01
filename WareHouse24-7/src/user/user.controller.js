@@ -1,7 +1,7 @@
 'use strict'
 
 const User = require('../user/user.model');
-const { encrypt, validateData, check } = require('../utils/validate');
+const { encrypt, validateData, check, sensitiveData } = require('../utils/validate');
 const { createToken } = require('../services/jwt')
 const fs = require('fs')
 const path = require('path')
@@ -48,7 +48,12 @@ exports.login = async(req, res) => {
 
         if(user && await check(data.password, user.password)) {
             let token = await createToken(user)
-            return res.send({message: 'User logged successfully', token: token})
+            let loggedUser = {
+                names: user.names,
+                username: user.username,
+                role: user.role
+            }
+            return res.send({message: 'User logged successfully', token: token, user: loggedUser})
         }
         
         return res.status(401).send({message: 'Invalid credentials'})
@@ -56,6 +61,38 @@ exports.login = async(req, res) => {
     } catch (err) {
         console.error(err)
         return res.status(500).send({message: 'Error, user not logged', error: err})
+    }
+}
+
+/* ----- GET USERS ----- */
+exports.get = async(req, res) => {
+    try {
+        let user = await User.find()
+
+        if(!user) return res.status(404).send({message: 'No users found'})
+        let data = sensitiveData(user)
+
+        return res.send({message: 'Users found', users: data})
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'Error getting users', error: err})
+    }
+}
+
+/* ----- GET USER ----- */
+exports.getUser = async(req, res) => {
+    try {
+        let id = req.params.id
+
+        let user = await User.findOne({_id: id}).lean()
+        if(!user) return res.status(404).send({message: 'User not found'})
+
+        return res.send({message: 'User found', user: user})
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send({message: 'Error getting user', error: err})
     }
 }
 
@@ -150,7 +187,7 @@ exports.addAccount = async(req, res) => {
         let user = new User(data)
         await user.save()
 
-        return res.send({message: 'Account created successfully'})
+        return res.send({message: 'Account created successfully', user: user})
             
     } catch (err) {
         console.error(err)

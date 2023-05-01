@@ -1,9 +1,51 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import photo from '../../assets/property-1.jpg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Card } from '../../components/Card'
+import axios from 'axios'
 
 export const UserPage = () => {
+    const [user, setUser] = useState([{}])
+    const [photo, setPhoto] = useState([])
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization' : localStorage.getItem('token')
+    }
+    const navigate = useNavigate()
+
+    const del = async(id) => {
+        try {
+            let confirmDel = confirm('Are you sure to delete this user?')
+            if(confirmDel){
+                const { data } = await axios.delete(`http://localhost:3022/user/delete/${id}`, {headers: headers})
+                getUsers()
+                alert(`${data.message}`)
+            }
+        } catch (err) {
+            console.error(err)
+        }
+    } 
+
+    const getUsers = async() => {
+        try {
+            const { data } = await axios('http://localhost:3022/user/get', {headers: headers})
+
+            for(let i = 0; i < data.users.length; i++){
+                let img = await axios(`http://localhost:3022/user/getImg/${data.users[i].photo}`, {headers: headers})
+                data.users[i].photo = img.request.responseURL
+            }
+            setUser(data.users)
+            
+        } catch (err) { 
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+
     return (
         <>
             <div
@@ -15,60 +57,26 @@ export const UserPage = () => {
                 
             </div>
 
-            <div className="table-responsive">
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Names</th>
-                            <th scope="col">Surnames</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Photo</th>
-                            <th scope="col" className='text-center'>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className='align-middle'>
-                        <tr>
-                            <td>Gerson Aarón</td>
-                            <td>Matta Aguilar</td>
-                            <td>12345678</td>
-                            <td>gmatta-2021223@kinal.edu.gt</td>
-                            <td>gmatta-2021223</td>
-                            <td><img src={logo} width='50rem' height='50rem' /></td>
-                            <td className='text-center'>
-                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
-                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gerson Aarón</td>
-                            <td>Matta Aguilar</td>
-                            <td>12345678</td>
-                            <td>gmatta-2021223@kinal.edu.gt</td>
-                            <td>gmatta-2021223</td>
-                            <td><img src={photo} width='50rem' height='50rem' /></td>
-                            <td className='text-center'>
-                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
-                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Gerson Aarón</td>
-                            <td>Matta Aguilar</td>
-                            <td>12345678</td>
-                            <td>gmatta-2021223@kinal.edu.gt</td>
-                            <td>gmatta-2021223</td>
-                            <td><img src={photo} width='50rem' height='50rem' /></td>
-                            <td className='text-center'>
-                                <button className='btn btn-danger border border-dark bi bi-trash3 ms-1 mt-1 mb-1'> Delete</button>
-                                <button className='btn btn-warning border border-dark bi bi-pencil ms-1 mt-1 mb-1'> Update</button>
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
+            <div className='col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-wrap mb-3 mt-3'>
+                {
+                    user.map((u, index) => {
+                        return (
+                            <Card 
+                                key={index} 
+                                name={u.names} 
+                                surname={u.surnames} 
+                                phone={u.phone}
+                                email={u.email}
+                                username={u.username}
+                                photo={u.photo}
+                                headers={headers}
+                                id={u._id}
+                                butDel={()=>del(u._id)}
+                                butEdit={()=>navigate(`/dashboard/updateUser/${u._id}`)}
+                            />
+                        )
+                    })
+                }
             </div>
         </>
     )
