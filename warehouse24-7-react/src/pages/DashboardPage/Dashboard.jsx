@@ -1,21 +1,31 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 /* import '../../css/bootstrap.min.css' */
 import '../DashboardPage/styleDashboard.css'
 import logo from '../../assets/logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import photo from '../../assets/property-1.jpg'
 import { Outlet } from 'react-router-dom'
+import { AuthContext } from '../../index'
 import { NavbarDashboard } from '../../components/NavbarDashboard'
 import { SidebarDashboard } from '../../components/SidebarDashboard'
 
+
 export const Dashboard = () => {
     const [open, setOpen] = useState(false)
+    const { setLoggedIn, dataUser } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const logOut = () => {
+        localStorage.clear()
+        setLoggedIn(false)
+        navigate('/login')
+    }
+
     return (
         <>
 
-            {/* <NavbarDashboard/> */}
             <header className="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow sticky-top justify-content align-items-center">
-
+                {/* <img className='ms-3' src={logo} width='35px' height='35px' /> */}
                 <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{ backgroundColor: '#ffffff' }}>
                     <Link className="brush">WH 24/7</Link>
                 </div>
@@ -35,7 +45,8 @@ export const Dashboard = () => {
                         <div className="position-sticky pt-3 sidebar-sticky">
                             <h5
                                 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-uppercase">
-                                <span>Welcome:</span>
+                                <span>Welcome: {dataUser.username}</span>
+                                <span>Role: {dataUser.role}</span>
                                 <Link className="link-secondary" aria-label="Add a new report">
                                     <span data-feather="plus-circle" className="align-text-bottom"></span>
                                 </Link>
@@ -54,10 +65,11 @@ export const Dashboard = () => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className="nav-link bi bi-file-bar-graph" >
+                                    <Link className="nav-link bi bi-file-bar-graph" to={'services'}>
                                         <span data-feather="shopping-cart" className="align-text-bottom"> </span>
                                         Services
                                     </Link>
+
                                 </li>
                                 <li className="nav-item">
                                     <Link className="nav-link bi bi-person" to='users'>
@@ -76,7 +88,7 @@ export const Dashboard = () => {
                                 <div>
                                     <div className='fixed-bottom'>
                                         <li className="nav-item">
-                                            <a className="nav-link" href="#">
+                                            <a className="nav-link" href="#" onClick={logOut}>
                                                 <span data-feather="file-text" className="align-text-bottom"></span>
                                                 Log Out
                                             </a>
@@ -89,238 +101,8 @@ export const Dashboard = () => {
                     </nav>
 
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-
-                        <Outlet />
-                        {/* <div
-                            className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                            <h1 className="h2">Users</h1>
-                            <button className='btn btn-success me-5 bi bi-plus-circle'> Add User</button>
-                        </div>
-
-                        <div className="table-responsive">
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Names</th>
-                                        <th scope="col">Surnames</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Photo</th>
-                                        <th scope="col" className='text-center'>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className='align-middle'>
-                                    <tr>
-                                        <td>Gerson Aarón</td>
-                                        <td>Matta Aguilar</td>
-                                        <td>12345678</td>
-                                        <td>gmatta-2021223@kinal.edu.gt</td>
-                                        <td>gmatta-2021223</td>
-                                        <td><img src={logo} width='50rem' height='50rem' /></td>
-                                        <td className='text-center'>
-                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gerson Aarón</td>
-                                        <td>Matta Aguilar</td>
-                                        <td>12345678</td>
-                                        <td>gmatta-2021223@kinal.edu.gt</td>
-                                        <td>gmatta-2021223</td>
-                                        <td><img src={photo} width='50rem' height='50rem' /></td>
-                                        <td className='text-center'>
-                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gerson Aarón</td>
-                                        <td>Matta Aguilar</td>
-                                        <td>12345678</td>
-                                        <td>gmatta-2021223@kinal.edu.gt</td>
-                                        <td>gmatta-2021223</td>
-                                        <td><img src={photo} width='50rem' height='50rem' /></td>
-                                        <td className='text-center'>
-                                            <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                                        </td>
-                                    </tr>
-                                    
-
-                                </tbody>
-                            </table>
-                        </div> */}
-
+                        <Outlet/>
                     </main>
-
-                    {/* <div className='col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-wrap mb-3 mt-3'>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                        <div class="card ms-2 mt-2" style={{ width: '18rem' }}>
-                            <img src={photo} class="card-img-top" alt="..." />
-
-                            <div class="card-body">
-                                
-                                <p class="card-text">Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores </p>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Size</li>
-                                <li class="list-group-item">Services</li>
-                                <li class="list-group-item">State</li>
-                                <li class="list-group-item">lessee</li>
-                            </ul>
-                            <div class="card-body text-center">
-                                <button className='btn btn-danger bi bi-trash3 ms-1'> Delete</button>
-                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
-                            </div>
-                        </div>
-                    </div> */}
-
-
                 </div>
             </div>
         </>

@@ -1,4 +1,4 @@
-import React, { Children, createContext, useState } from 'react'
+import React, { useEffect, useState, createContext } from 'react'
 import { createBrowserRouter, RouterProvider, Navigate, BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { HomePage } from './pages/HomePage/HomePage'
@@ -14,7 +14,22 @@ import { ServicePage } from './pages/Service/ServicePage'
 import { AddServicePage } from './pages/Service/AddServicePage'
 import { UpdateServicePage } from './pages/Service/UpdateServicePage'
 
+export const AuthContext = createContext()
+
 export const Index = () => {
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [dataUser, setDataUser] = useState({
+        names: '',
+        username: '',
+        role: ''
+    })
+
+    useEffect(() => {
+        let token = localStorage.getItem('token')
+        if(token) setLoggedIn(true)
+    }, [])
+    
+
     const routes = createBrowserRouter([
         {
             path: '/',
@@ -64,6 +79,9 @@ export const Index = () => {
                         {
                             path:'updateService/:id',
                             element:<UpdateServicePage/>
+                        },{
+                            path: 'updateUser/:id',
+                            element: <UpdateUserPage/>
                         }
                     ]
                 }
@@ -72,6 +90,8 @@ export const Index = () => {
     ])
 
     return (
-        <RouterProvider router={routes} />
+        <AuthContext.Provider value={{loggedIn, setLoggedIn, dataUser, setDataUser}}>
+            <RouterProvider router={routes} />
+        </AuthContext.Provider>
     )
 }
