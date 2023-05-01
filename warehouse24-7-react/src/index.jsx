@@ -10,10 +10,11 @@ import { AboutUsPage } from './pages/HomePage/AboutUsPage'
 import { LoginPage } from './pages/HomePage/LoginPage'
 import { NotFound } from './pages/NotFound/NotFound'
 import { WarehousePage } from './pages/Warehouse/WarehousePage'
-/* export const AuthContext = createContext(); */
+import { ServicePage } from './pages/Service/ServicePage'
+import { AddServicePage } from './pages/Service/AddServicePage'
+import { UpdateServicePage } from './pages/Service/UpdateServicePage'
 
 export const Index = () => {
-    const [open, setOpen] = useState(false)
     const routes = createBrowserRouter([
         {
             path: '/',
@@ -51,6 +52,18 @@ export const Index = () => {
                         {
                             path: 'warehouses',
                             element: <WarehousePage/>
+                        },
+                        {
+                            path:'services',
+                            element:<ServicePage/>
+                        },
+                        {
+                            path:'addService',
+                            element:<AddServicePage/>
+                        },
+                        {
+                            path:'updateService/:id',
+                            element:<UpdateServicePage/>
                         }
                     ]
                 }
@@ -58,13 +71,7 @@ export const Index = () => {
         }
     ])
 
-    {/* <AuthContext.Provider value={{open, setOpen}}>
-            
-        </AuthContext.Provider> */}
-
     return (
         <RouterProvider router={routes} />
-        
-        
     )
 }
