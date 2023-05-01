@@ -39,29 +39,19 @@ const branchSchema = mongoose.Schema({
         uppercase: true,
         enum: ['ACTIVE', 'DISABLE']
     },
-    services: {
-        type: [{
-            service: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Service',
-                required: true
-            }
-        }]
-    },
     admin: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    warehouses: {
-        type: [{
-            warehouse: {
+    warehouses:{
+        type:[{
+            warehouse:{
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'WareHouse',
                 required: true
             }
-        }]
-    },
+        }]},
     photo: {
         type: String,
     }
