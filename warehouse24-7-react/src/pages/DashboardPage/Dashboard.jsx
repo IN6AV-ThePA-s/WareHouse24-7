@@ -88,10 +88,10 @@ export const Dashboard = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link bi bi-file-bar-graph" href="#">
+                                                <Link className="nav-link bi bi-file-bar-graph" href="#" to={'services'}>
                                                     <span data-feather="shopping-cart" className="align-text-bottom"> </span>
                                                     Services
-                                                </a>
+                                                </Link>
                                             </li>
                                         </>
                                     ) : (
