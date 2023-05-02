@@ -7,8 +7,8 @@ export const Thead = ({headerGroups}) => {
             headerGroups.map((headerGroup)=>(
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {
-                        headerGroup.headers.map((column)=>(
-                            <th>
+                        headerGroup.headers.map((column,index)=>(
+                            <th key={index}>
                                 {
                                     column.render('Header')
                                 }

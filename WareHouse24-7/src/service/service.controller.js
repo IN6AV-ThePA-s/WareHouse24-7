@@ -50,10 +50,10 @@ exports.getService = async(req,res) =>{
         //obtener el id del servicio que se traerá
         let id = req.params.id
         //obtenerlo de la base de datos
-        let serviceFind = await Service.findOne({_id:id})
+        let service = await Service.findOne({_id:id})
         //retornarlo
-        if(!serviceFind) return res.status(404).send({message:'Service not found'})
-        return res.send({message: 'Service Found',serviceFind})
+        if(!service) return res.status(404).send({message:'Service not found'})
+        return res.send({message: 'Service Found',service})
     } catch (err) {
         console.error(err);
         return res.status(500).send({message:'Error getting service'})

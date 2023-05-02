@@ -98,11 +98,6 @@ export const Dashboard = () => {
                                         <></>
                                     )
                                 }
-
-
-
-
-
                             </ul>
                             <ul className="nav h-50 d-flex flex-column justify-content-between mb-2">
 
@@ -120,7 +115,7 @@ export const Dashboard = () => {
                     </nav>
 
                     <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                        <Outlet />
+                        <Outlet/>
                     </main>
                 </div>
             </div>
