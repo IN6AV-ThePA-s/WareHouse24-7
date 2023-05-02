@@ -18,6 +18,7 @@ export const UpdateUserPage = () => {
         phone: '',
         username: ''
     })
+    const [photo, setPhoto] = useState({})
 
     const getUser = async() => {
         try {
@@ -40,6 +41,12 @@ export const UpdateUserPage = () => {
         })
     }
 
+    const handlePhoto = (e) => {
+        let formData = new FormData()
+        formData.append('image', e.target.files[0])
+
+    }
+
     const update = async() => {
         try {
             let datos = {
@@ -50,6 +57,15 @@ export const UpdateUserPage = () => {
                 username: document.getElementById('username').value
             }
             let { data } = await axios.put(`http://localhost:3022/user/update/${id}`, datos, {headers: headers})
+
+            if(photo) await axios.put(
+                `http://localhost:3022/user/uploadImg/${data.user._id}`, 
+                photo, 
+                { headers: 
+                    {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} 
+                })
+
+                
             alert(data.message, data.user)
         } catch (err) {
             console.error(err)
