@@ -33,3 +33,20 @@ exports.validateData = (data) => {
 
     return msg.trim()
 }
+
+exports.sensitiveData = (data) => {
+    let list = []
+    for(let a of data) {
+        let payload = {
+            _id: a._id,
+            names: a.names,
+            surnames: a.surnames,
+            phone: a.phone,
+            email: a.email,
+            username: a.username,
+            photo: a.photo
+        }
+        list.push(payload)
+    }
+    return list
+}

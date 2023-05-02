@@ -6,10 +6,14 @@ import { Table } from '../../components/Table'
 import axios from 'axios'
 
 export const ServicePage = () => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization' : localStorage.getItem('token')
+    }
     const [services,setServices] = useState([])
     const getServices = async() =>{
         try {
-            const {data} = await axios('http://localhost:3022/service/get')
+            const {data} = await axios('http://localhost:3022/service/get',{headers:headers})
             setServices(data.services);          
         } catch (err) {
             console.error(err);

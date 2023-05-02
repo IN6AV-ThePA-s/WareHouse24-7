@@ -4,8 +4,13 @@
 }
 
 @font-face {
-    font-family: Lemonmilk;
+    font-family: LemonmilkBold;
     src: url('../../fonts/LEMONMILK-Bold.otf');
+}
+
+@font-face {
+    font-family: LemonmilkRegular;
+    src: url('../../fonts/LEMONMILK-Regular.otf');
 }
 
 @font-face {
@@ -13,21 +18,60 @@
     src: url('../../fonts/monof55.ttf');
 }
 
-.h3247{
+.h3247 {
     font-family: Brush;
     font-size: calc(1.5em + 1.5vw);
     color: #8cc044;
 }
 
-.h1247{
-    font-family: Lemonmilk;
+.h1247 {
+    font-family: LemonmilkBold;
+    font-size: calc(2em + 2vw);
+    border-bottom: 5px solid #8cc044;
+    color: #fff;
+}
+
+.h2247 {
+    font-family: LemonmilkRegular;
     font-size: calc(2em + 2vw);
     color: #fff;
 }
 
-.p247{
+.p247 {
     font-family: Mono;
     color: #fff;
+}
+
+.aboutimg {
+
+    
+
+    box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.137);
+    transition: 0.3s;
+    -webkit-filter: blur(0px);
+    -moz-filter: blur(0px);
+    -o-filter: blur(0px);
+    -ms-filter: blur(0px);
+    filter: blur(0px);
+}
+
+.aboutimg:hover {
+
+
+    box-shadow: 5px 5px 5px 5px rgba(255, 255, 255, 0.304);
+    -webkit-filter: blur(1.5px);
+    -moz-filter: blur(1.5px);
+    -o-filter: blur(1.5px);
+    -ms-filter: blur(1.5px);
+    filter: blur(1.5px);
+}
+
+.contAbout{
+    width: 100%;
+}
+
+.contAbout div{
+    width: 50%;
 }
 
 /* Custom default button */
@@ -143,4 +187,13 @@
     text-align: center;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+    .aboutimg{
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
+    
 }

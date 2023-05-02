@@ -2,8 +2,13 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export const AddServicePage = () => {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization' : localStorage.getItem('token')
+    }
     const navigate = useNavigate()
     const [service, setService] = useState({
         name:'',
@@ -20,12 +25,41 @@ export const AddServicePage = () => {
 
     const addService = async() =>{
         try {
-            const {data} = await axios.post('http://localhost:3022/service/add',service)
-            alert(data.message)
+            const {data} = await axios.post('http://localhost:3022/service/add',service,{headers:headers})
+            Swal.fire({
+                title:data.message,
+                grow:'row',
+                width:'35%',
+                icon:'success',
+                allowEnterKey:true,
+                allowEscapeKey:false,
+                backdrop:true,
+                background:' #24242c ',
+                customClass:{
+                    confirmButton:'btn btn-success border border-dark' 
+                },
+                buttonsStyling:false
+            })
             navigate('/dashboard/services')
         } catch (err) {
+            console.log(err.response?.data);
+            let errorMessage = err.response?.data
+            Swal.fire({
+                title:'Error',
+                html:errorMessage.replaceAll('required','required <br>'),
+                grow:'row',
+                width:'35%',
+                icon:'error',
+                allowEnterKey:true,
+                allowEscapeKey:false,
+                backdrop:true,
+                background:' #24242c ',
+                customClass:{
+                    confirmButton:'btn btn-danger border border-dark' 
+                },
+                buttonsStyling:false
+            })
             console.error(err);
-            alert(err.response?.data)
             throw new Error(err.response.data ||'Error adding service')
         }
     }

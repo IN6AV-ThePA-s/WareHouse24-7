@@ -7,7 +7,6 @@ export const Tbody = ({getTableBodyProps,rows,prepareRow,nameRuta}) => {
         {
             rows.map((row)=>{
                 prepareRow(row)
-                console.log(row);
                 return(
                     <tr {...row.getRowProps()}>
                         {
