@@ -61,10 +61,6 @@ export const Index = () => {
                             element: <AddUserPage/>
                         },
                         {
-                            path: 'updateUser',
-                            element: <UpdateUserPage/>
-                        },
-                        {
                             path: 'warehouses',
                             element: <WarehousePage/>
                         },
