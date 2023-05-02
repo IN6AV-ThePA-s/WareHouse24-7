@@ -6,9 +6,10 @@ import user from '../../assets/user.png'
 import { auto } from '@popperjs/core'
 import { AuthContext } from '../../index'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const LoginPage = () => {
-    const { loggedIn, setLoggedIn, setDataUser } = useContext(AuthContext)
+    const { loggedIn, setLoggedIn, setDataUser, dataUser } = useContext(AuthContext)
     const navigate = useNavigate()
     const [form, setForm] = useState({
         username: '',
@@ -28,14 +29,22 @@ export const LoginPage = () => {
             const { data } = await axios.post('http://localhost:3022/user/login', form)
 
             if(data.token) {
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
                 localStorage.setItem('token', data.token)
-                setDataUser(data.user)
+                localStorage.setItem('name', data.user.names)
+                localStorage.setItem('username', data.user.username)
+                localStorage.setItem('role', data.user.role)
                 setLoggedIn(true)
                 navigate('/dashboard')
             }
 
         } catch (err) {
-            console.error(err)
+            Swal.fire(err.response.data.message, '', 'error')
             throw new Error('Login error')
         }
     }

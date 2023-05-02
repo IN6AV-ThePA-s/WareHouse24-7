@@ -44,7 +44,7 @@ export const Index = () => {
                 },
                 {
                     path: '/dashboard',
-                    element: <Dashboard/>,
+                    element: loggedIn ? <Dashboard/> : <LoginPage/>,
                     children: [
                         {
                             path: 'users',

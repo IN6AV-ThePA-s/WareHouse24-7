@@ -3,7 +3,7 @@ import './styleUser.css'
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
-import fs from 'fs'
+import Swal from 'sweetalert2'
 
 export const AddUserPage = () => {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ export const AddUserPage = () => {
         username: '',
         role: ''
     })
-    const [photo, setPhoto] = useState({})
+    const [photo, setPhoto] = useState()
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -46,13 +46,21 @@ export const AddUserPage = () => {
     const add = async () => {
         try {
             const { data } = await axios.post('http://localhost:3022/user/addAccount', form, { headers: headers })
+            if(photo) await axios.put(`http://localhost:3022/user/uploadImg/${data.user._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
 
-            await axios.put(`http://localhost:3022/user/uploadImg/${data.user._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
+            if(data.message) {
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
 
-            if(data.message) return alert(data.message)
+                navigate('/dashboard/users')
+            }
 
-            
         } catch (err) {
+            Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
         }
     }
@@ -63,14 +71,13 @@ export const AddUserPage = () => {
             <div
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
                 <h1 className="h2">Add User</h1>
-                <Link to={'/dashboard/users'}>
-                    <button type="submit" className="btn btn-success border border-dark me-5 bi bi-plus-circle" onClick={()=>{add()}}> Create User</button>
-                </Link>
-                {/* <button type="submit" className="btn btn-warning border border-dark btn-block mb-4">Update User</button> */}
-
             </div>
 
-
+            <Link to={'/dashboard/users'}>
+                <button type="submit" className="btn btn-danger m-2"> Cancel</button>
+            </Link>
+            <button type="submit" className="btn btn-success m-2 bi bi-plus-circle" onClick={()=>{add()}}> Create User</button>
+            
 
             <form className='ps-5 ps-5 pt-4 me-5'>
 
