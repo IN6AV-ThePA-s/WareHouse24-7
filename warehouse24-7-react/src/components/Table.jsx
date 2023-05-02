@@ -4,6 +4,7 @@ import { Thead } from './Thead'
 import { Tbody } from './Tbody'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const Table = ({values,nameRuta}) => {
     const [columns,setColumns] = useState([])
@@ -27,10 +28,26 @@ export const Table = ({values,nameRuta}) => {
            prepareRow, preGlobalFilteredRows, setGlobalFilter, state} = tabloide
     
     useEffect(()=>{
-        if(values.length !== 0){
-            getKeys()
+        if(values){
+            if(values.length !== 0){
+                getKeys()
+            }
+        }else{
+            Swal.fire({
+                title:'There is not data yet',
+                grow:'row',
+                width:'35%',
+                icon:'info',
+                allowEnterKey:true,
+                allowEscapeKey:false,
+                backdrop:true,
+                background:' #24242c ',
+                customClass:{
+                    confirmButton:'btn btn-success border border-dark' 
+                },
+                buttonsStyling:false
+            })
         }
-        
     },[values])
 
     return (
