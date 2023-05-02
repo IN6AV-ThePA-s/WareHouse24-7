@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import './styleUser.css'
 import { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const UpdateUserPage = () => {
     const { id } = useParams()
@@ -10,6 +11,7 @@ export const UpdateUserPage = () => {
         'Content-Type': 'application/json',
         'Authorization' : localStorage.getItem('token')
     }
+    const navigate = useNavigate()
     const [user, setUser] = useState({})
     const [form, setForm] = useState({
         names: '',
@@ -18,6 +20,7 @@ export const UpdateUserPage = () => {
         phone: '',
         username: ''
     })
+    const [photo, setPhoto] = useState()
 
     const getUser = async() => {
         try {
@@ -25,7 +28,6 @@ export const UpdateUserPage = () => {
 
             if(data.user) {
                 setUser(data.user)
-                
             }
             
         } catch (err) {
@@ -40,6 +42,12 @@ export const UpdateUserPage = () => {
         })
     }
 
+    const handlePhoto = (e) => {
+        let formData = new FormData()
+        formData.append('image', e.target.files[0])
+        setPhoto(formData)
+    }
+
     const update = async() => {
         try {
             let datos = {
@@ -50,8 +58,28 @@ export const UpdateUserPage = () => {
                 username: document.getElementById('username').value
             }
             let { data } = await axios.put(`http://localhost:3022/user/update/${id}`, datos, {headers: headers})
-            alert(data.message, data.user)
+
+            if(photo) {
+                await axios.put(
+                    `http://localhost:3022/user/uploadImg/${data.user._id}`, 
+                    photo, 
+                    { headers: 
+                        {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} 
+                    })
+            }
+            if(data.user) {
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
+            }
+
+            navigate('/dashboard/users')
+            
         } catch (err) {
+            Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
         }
     }
@@ -73,15 +101,13 @@ export const UpdateUserPage = () => {
             <div
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
                 <h1 className="h2">Update User</h1>
-
-                {/* <button type="submit" className="btn btn-success border border-dark me-5 bi bi-plus-circle"> Create User</button> */}
-                <Link to={'/dashboard/users'}>
-                <button type="submit" className="btn btn-warning border border-dark btn-block mb-4" onClick={update}>Update User</button>
-                </Link>
+                
 
             </div>
-
-
+            <Link to={'/dashboard/users'}>
+                <button type="submit" className="btn btn-danger btn-block m-2">Cancel</button>
+            </Link>
+            <button type="submit" className="btn btn-warning btn-block m-2" onClick={update}>Update User</button>
 
             <form className='ps-5 ps-5 pt-4 me-5'>
 
@@ -116,7 +142,7 @@ export const UpdateUserPage = () => {
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input className="form-control" type="file" id="formFile" />
+                    <input className="form-control" type="file" id="formFile" onChange={handlePhoto}/>
                     <label htmlFor="formFile" className="form-label">Photo</label>
                 </div>
 
