@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 export const AddWarehousePage = () => {
     const [services, setServices] = useState([{}])
     const [branches, setBranches] = useState([{}])
-    const [service, setService] = useState([])
+    const [service, setService] = useState([{}])
     const [viewService, setViewService] = useState([])
     const [img, setImg] = useState()
     const navigate = useNavigate()
@@ -181,7 +181,7 @@ export const AddWarehousePage = () => {
                     <select className="form-select select-input" name='services' onChange={handleChangeServices}>
                         <option defaultValue={null}>Select services</option>
                         {
-                            services.map(({ _id, name, price }, index) => {
+                            services?.map(({ _id, name, price }, index) => {
                                 return (
                                     <option key={index} value={_id}>{`${name}   |   Q.${Number(price).toFixed(2)}`}</option>
                                 )
@@ -195,7 +195,7 @@ export const AddWarehousePage = () => {
                     <select className='form-select select' name='branch' onChange={handleChange} >
                         <option defaultValue={null}>Select branch</option>
                         {
-                            branches.map(({ _id, name }, index) => {
+                            branches?.map(({ _id, name }, index) => {
                                 return (
                                     <option key={index} value={`${_id}`}>{`${name}`}</option>
                                 )
