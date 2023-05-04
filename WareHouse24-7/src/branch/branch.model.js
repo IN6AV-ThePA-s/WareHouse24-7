@@ -16,19 +16,6 @@ const branchSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    location: {
-        type: [{
-            altitude: {
-                type: String,
-                required: true
-            },
-            length: {
-                type: String,
-                required: true
-            }
-        }],
-        required: true
-    },
     capitalGain: {
         type: Number,
         required: true
@@ -39,19 +26,6 @@ const branchSchema = mongoose.Schema({
         uppercase: true,
         enum: ['ACTIVE', 'DISABLE']
     },
-    admin: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    warehouses:{
-        type:[{
-            warehouse:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'WareHouse',
-                required: true
-            }
-        }]},
     photo: {
         type: String,
     }
