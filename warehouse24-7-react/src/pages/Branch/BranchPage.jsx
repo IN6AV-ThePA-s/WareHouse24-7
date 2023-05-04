@@ -73,7 +73,7 @@ export const BranchPage = () => {
                                 id={b._id}
                                 photo={b.photo}
                                 butDel={()=>del(b._id)}
-                                butEdit={()=>navigate(`/dashboard/updateUser/${b._id}`)}
+                                butEdit={()=>navigate(`/dashboard/updateBranch/${b._id}`)}
                             />
                         )
                     })

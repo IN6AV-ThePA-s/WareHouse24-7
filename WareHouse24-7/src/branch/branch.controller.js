@@ -38,7 +38,7 @@ exports.getBranch = async(req, res)=>{
         let branchId = req.params.id;
         let branch = await Branch.findOne({_id: branchId})
         if(!branch) return res.status(404).send({message: 'Couldnt found the branch'})
-        return res.send({message: 'Branch found', branch});
+        return res.send({message: 'Branch found', branch: branch});
     } catch (err) {
         console.error(err);
         return res.status(500).send({message: 'Error getting this branch'})

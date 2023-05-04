@@ -1,33 +1,21 @@
 import {React, useEffect} from 'react'
 import './branchPage.css'
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
 import fs from 'fs'
 
-export const AddBranchPage = () => {
+export const UpdateBranchPage = () => {
+    const { id } = useParams()
     const navigate = useNavigate()
-    const [form, setForm] = useState({
-        name: '',
-        description: '',
-        address: '',
-        capitalGain: 0,
-        state: ''
-    })
     const [state, setState] = useState('DISABLE')
+    const [branch, setBranch] = useState({})
     const [photo, setPhoto] = useState({})
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
     }
 
-    const handleForm = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-            state: state
-        })
-    }
 
     const handlePhoto = (e) => {
         let formData = new FormData()
@@ -43,19 +31,41 @@ export const AddBranchPage = () => {
         }
     }
 
-
-    const add = async () => {
+    const getBranch = async()=>{
         try {
-            const { data } = await axios.post('http://localhost:3022/branch/add', form, { headers: headers })
+            const { data } = await axios(`http://localhost:3022/branch/get/${id}`, {headers: headers});
+            console.log(data.branch);
+            setBranch(data.branch);
+            console.log(branch);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+
+    const update = async () => {
+        try {
+            let form={
+                name: document.getElementById('name').value,
+                description: document.getElementById('description').value,
+                address: document.getElementById('address').value,
+                capitalGain: document.getElementById('capitalGain').value,
+                state: state
+            }
+            const { data } = await axios.put(`http://localhost:3022/branch/update/${id}`, form, { headers: headers })
             if(photo)await axios.put(`http://localhost:3022/branch/uploadImg/${data.branch._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
 
-            alert(`${data.message}`)
+            if(data.message) return alert(data.message)
             
         } catch (err) {
             console.error(err)
         }
     }
 
+    useEffect(() => {
+      {getBranch()}
+    }, [])
+    
     
 
     return (
@@ -63,9 +73,9 @@ export const AddBranchPage = () => {
         <>
             <div
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3 border-bottom">
-                <h1 className="h2">Add Branch</h1>
+                <h1 className="h2">Update Branch</h1>
                 <Link to={'/dashboard/branches'}>
-                    <button type="submit" className="btn btn-success border border-dark me-5 bi bi-plus-circle" onClick={()=>{add()}}> Create Branch</button>
+                    <button type="submit" className="btn btn-warning border border-dark me-5 bi-arrow-clockwise" onClick={()=>{update()}}> Update Branch</button>
                 </Link>
                 {/* <button type="submit" className="btn btn-warning border border-dark btn-block mb-4">Update User</button> */}
 
@@ -76,22 +86,22 @@ export const AddBranchPage = () => {
             <form className='ps-5 ps-5 pt-4 me-5'>
 
                 <div className="form-outline mb-3">
-                    <input onChange={handleForm} type="text" className="form-control" placeholder='Enter the name of the branch' maxLength="100" name='name' />
+                    <input  type="text" id='name' className="form-control" placeholder='Enter the name of the branch'  maxLength="100" defaultValue={branch.name} />
                     <label className="form-label" htmlFor="form6Example4">Name</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input onChange={handleForm} type="text" className="form-control" placeholder='About..' maxLength="100" name='description' />
+                    <input type="text" id='description' className="form-control" placeholder='About..'  maxLength="100"  defaultValue={branch.description} />
                     <label className="form-label" htmlFor="form6Example5">Description</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input onChange={handleForm} type="address" className="form-control" placeholder='Enter the address' maxLength="100" name='address' />
+                    <input  type="address" id='address' className="form-control" placeholder='Enter the address'  maxLength="100" defaultValue={branch.address}/>
                     <label className="form-label" htmlFor="form6Example6">Address</label>
                 </div>
 
                 <div className="form-outline mb-3">
-                    <input onChange={handleForm} type="number" className="form-control" placeholder='Enter the capital gain' maxLength="100" name='capitalGain'/>
+                    <input  type="number" id='capitalGain' className="form-control" placeholder='Enter the capital gain'  maxLength="100"  defaultValue={branch.capitalGain}/>
                     <label className="form-label" htmlFor="form6Example6">Capital Gain</label>
                 </div>
 
