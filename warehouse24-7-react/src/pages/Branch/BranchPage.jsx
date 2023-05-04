@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export const BranchPage = () => {
     const [branch, setBranch] = useState([{}])
-    const [photo, setPhoto] = useState([])
+    const [photo, setPhoto] = useState()
     const headers = {
         'Content-Type': 'application/json',
         'Authorization' : localStorage.getItem('token')

@@ -10,7 +10,7 @@ export const UpdateBranchPage = () => {
     const navigate = useNavigate()
     const [state, setState] = useState('DISABLE')
     const [branch, setBranch] = useState({})
-    const [photo, setPhoto] = useState({})
+    const [photo, setPhoto] = useState()
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
@@ -53,7 +53,7 @@ export const UpdateBranchPage = () => {
                 state: state
             }
             const { data } = await axios.put(`http://localhost:3022/branch/update/${id}`, form, { headers: headers })
-            if(photo)await axios.put(`http://localhost:3022/branch/uploadImg/${data.branch._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
+            if(photo)await axios.put(`http://localhost:3022/branch/uploadImg/${data.updateBranch._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
 
             if(data.message) return alert(data.message)
             
