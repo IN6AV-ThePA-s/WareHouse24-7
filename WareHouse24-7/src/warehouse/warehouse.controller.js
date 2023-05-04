@@ -48,7 +48,8 @@ exports.gets = async (req, res) => {
         path: "lessee",
         select: "names surnames phone",
       })
-      .populate("branch");
+      .populate("branch")
+      .populate("additionalService");
     return res.send({ warehouses });
   } catch (err) {
     console.error(err);
@@ -96,7 +97,7 @@ exports.upd = async (req, res) => {
       return res
         .status(401)
         .send({ message: `Warehouse not found or not updated` });
-    return res.send({ updWare });
+    return res.send({ message: `The warehouse updated`,updWare });
   } catch (err) {
     console.error(err);
     return res.status(500).send({ message: `Error updatting warehouse` });

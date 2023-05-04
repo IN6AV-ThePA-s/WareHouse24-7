@@ -86,7 +86,7 @@ export const AssignWarehousePage = () => {
                 <h1 className="h2">Assign Lesse Warehouse</h1>
             </div>
 
-            <Link to={'/dashboard/warehouse'}>
+            <Link to={'/dashboard/warehouses.0'}>
                 <button type="submit" className="btn btn-danger m-2"> Cancel</button>
             </Link>
             <button className="btn btn-success m-2 bi bi-plus-circle" onClick={(e) => assign(e)} > Assing Lesse</button>

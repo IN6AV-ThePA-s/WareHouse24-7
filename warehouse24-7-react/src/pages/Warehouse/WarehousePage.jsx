@@ -8,6 +8,7 @@ import { AuthContext } from '../..'
 export const WarehousePage = () => {
     const { dataUser } = useContext(AuthContext)
     const [warehouses, setWarehouses] = useState([{}])
+    const [sear, setSear] = useState([])
     const [access, setAccess] = useState(false)
     const [isAdmin, setIsAdmin] = useState(false)
     const headers = {
@@ -28,6 +29,7 @@ export const WarehousePage = () => {
                     continue
                 }
                 setWarehouses(data.warehouses)
+                setSear(data.warehouses)
             }
             console.log(data);
         } catch (err) {
@@ -52,8 +54,12 @@ export const WarehousePage = () => {
                 }
             })
         } catch (err) {
-            Swal.fire(err.response.data.message, '', 'error')
-            console.error(err)
+            //console.error(err)
+            console.log(err.response);
+            Swal.fire({
+                title: `The warehouse cannot be deleted as it is leased`,
+                timer: 1000,
+            })
         }
     }
 
@@ -73,9 +79,32 @@ export const WarehousePage = () => {
                     Swal.fire('No worries!', '', 'success')
                 }
             })
-        } catch (err) { 
+        } catch (err) {
             Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
+        }
+    }
+
+    const search = (e) => {
+        let sear = e.target.value
+        let condition = new RegExp(sear)
+        let ware = warehouses.filter((a) => {
+            return condition.test(a.type)
+        })
+        setSear(ware)
+    }
+
+    const fil = (e) => {
+        let sear = e.target.value
+        console.log(sear);
+        if (sear != "FILTER") {
+            let condition = new RegExp(sear)
+            let ware = warehouses.filter((a) => {
+                return condition.test(a[e.target.name])
+            })
+            setSear(ware)
+        } else {
+            setSear(warehouses)
         }
     }
 
@@ -93,17 +122,33 @@ export const WarehousePage = () => {
             <div
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 className="h2">Warehouses</h1>
-                <Link to='/dashboard/addWarehouse'>
-                    <button className='btn btn-success border border-dark me-5 bi bi-plus-circle'> Add Warehouse</button>
-                </Link>
+                {
+                    isAdmin ?
+                        (
+                            <Link to='/dashboard/addWarehouse'>
+                                <button className='btn btn-success border border-dark me-5 bi bi-plus-circle'> Add Warehouse</button>
+                            </Link>
+                        ) : ''
+                }
+
 
             </div>
+            <div>
+                <input type="text" placeholder='Search' className='form-control' onChange={search} />
+                <select name="state" className='form-select' onChange={fil}>
+                    <option value={null}>FILTER</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="DISABLE">DISEABLE</option>
+                    <option value="LEASED">LEASED</option>
+                </select>
+            </div>
+
 
             <div className='col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-wrap mb-3 mt-3'>
 
                 {/* AQUÍ IRAN LAS CARDS */}
                 {
-                    warehouses.map((warehouse, index) => {
+                    sear.map((warehouse, index) => {
                         return (
                             <div key={index} className="card ms-2 mt-2" style={{ width: '18rem' }}>
                                 <img crossOrigin='anonymous' src={warehouse?.photo} className="card-img-top" alt="..." />
@@ -121,13 +166,26 @@ export const WarehousePage = () => {
                                             )
                                         })
                                     }</li>
+                                    {
+                                        warehouse?.additionalService ?
+                                            (
+                                                <li className="list-group-item">Additional Services: {
+                                                    warehouse.additionalService?.map((service) => {
+                                                        return (
+                                                            `${service.service.name}`
+                                                        )
+                                                    })
+                                                }</li>
+                                            ) : ''
+                                    }
+
 
                                     {access ?
                                         (
                                             <>
                                                 <li className="list-group-item">State: {warehouse.state}</li>
-                                                <li className="list-group-item">lessee: {warehouse?.lessee ? `${warehouse?.lessee?.names} ${warehouse?.lessee?.surnames}` : 'No assigned'}</li>
-                                                <li className="list-group-item">lessee: {`Q. ${Number(warehouse.price).toFixed(2)}`}</li>
+                                                <li className="list-group-item">Lessee: {warehouse?.lessee ? `${warehouse?.lessee?.names} ${warehouse?.lessee?.surnames}` : 'No assigned'}</li>
+                                                <li className="list-group-item">Price: {`Q. ${Number(warehouse.price).toFixed(2)}`}</li>
                                             </>
                                         )
                                         : ''
@@ -141,7 +199,9 @@ export const WarehousePage = () => {
                                                     (
                                                         <>
                                                             <button className='btn btn-danger bi bi-trash3 ms-1 mb-1' onClick={() => deleteWarehouse(warehouse._id)}> Delete</button>
-                                                            <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                                            <Link to={`/dashboard/update/${warehouse._id}`}>
+                                                                <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
+                                                            </Link>
                                                         </>
                                                     ) : ''
                                             }

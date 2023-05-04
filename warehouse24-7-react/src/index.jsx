@@ -19,6 +19,7 @@ import { UpdateBranchPage } from './pages/Branch/Updatebranch'
 import { AddWarehousePage } from './pages/Warehouse/AddWarehousePage'
 import { ViewWarehousePage } from './pages/Warehouse/ViewWarehousePage'
 import { AssignWarehousePage } from './pages/Warehouse/AssignWarehousePage'
+import { UpdateWarehousePage } from './pages/Warehouse/UpdateWarehousePage'
 
 export const AuthContext = createContext()
 
@@ -32,35 +33,35 @@ export const Index = () => {
 
     useEffect(() => {
         let token = localStorage.getItem('token')
-        if(token) setLoggedIn(true)
+        if (token) setLoggedIn(true)
     }, [])
-    
+
 
     const routes = createBrowserRouter([
         {
             path: '/',
             element: <App />,
-            errorElement: <NotFound/>,
+            errorElement: <NotFound />,
             children: [
                 {
                     path: '/',
-                    element: <HomePage/>
+                    element: <HomePage />
                 },
                 {
                     path: '/about',
-                    element: <AboutUsPage/>
+                    element: <AboutUsPage />
                 },
                 {
                     path: '/login',
-                    element: <LoginPage/>
+                    element: <LoginPage />
                 },
                 {
                     path: '/dashboard',
-                    element: loggedIn ? <Dashboard/> : <LoginPage/>,
+                    element: loggedIn ? <Dashboard /> : <LoginPage />,
                     children: [
                         {
                             path: 'users',
-                            element: <UserPage/>
+                            element: <UserPage />
                         },
                         {
                             path: 'addWarehouse',
@@ -75,36 +76,40 @@ export const Index = () => {
                             element: <AssignWarehousePage />
                         },
                         {
+                            path: 'update/:id',
+                            element: <UpdateWarehousePage/>
+                        },
+                        {
                             path: 'addUser',
-                            element: <AddUserPage/>
+                            element: <AddUserPage />
                         },
                         {
                             path: 'warehouses',
-                            element: <WarehousePage/>
+                            element: <WarehousePage />
                         },
                         {
-                            path:'services',
-                            element:<ServicePage/>
+                            path: 'services',
+                            element: <ServicePage />
                         },
                         {
-                            path:'addService',
-                            element:<AddServicePage/>
+                            path: 'addService',
+                            element: <AddServicePage />
                         },
                         {
-                            path:'updateService/:id',
-                            element:<UpdateServicePage/>
-                        },{
+                            path: 'updateService/:id',
+                            element: <UpdateServicePage />
+                        }, {
                             path: 'updateUser/:id',
-                            element: <UpdateUserPage/>
-                        },{
+                            element: <UpdateUserPage />
+                        }, {
                             path: 'branches',
-                            element: <BranchPage/>
-                        },{
+                            element: <BranchPage />
+                        }, {
                             path: 'addBranch',
-                            element: <AddBranchPage/>
-                        },{
+                            element: <AddBranchPage />
+                        }, {
                             path: 'updateBranch/:id',
-                            element: <UpdateBranchPage/>
+                            element: <UpdateBranchPage />
                         }
                     ]
                 }
@@ -113,7 +118,7 @@ export const Index = () => {
     ])
 
     return (
-        <AuthContext.Provider value={{loggedIn, setLoggedIn, dataUser, setDataUser}}>
+        <AuthContext.Provider value={{ loggedIn, setLoggedIn, dataUser, setDataUser }}>
             <RouterProvider router={routes} />
         </AuthContext.Provider>
     )

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 export const AddWarehousePage = () => {
     const [services, setServices] = useState([{}])
     const [branches, setBranches] = useState([{}])
-    const [service, setService] = useState([{}])
+    const [service, setService] = useState([])
     const [viewService, setViewService] = useState([])
     const [img, setImg] = useState()
     const navigate = useNavigate()
@@ -56,12 +56,10 @@ export const AddWarehousePage = () => {
         }
         if(!service.includes(data.service)){
             setService([...service, data])
-            setForm({
-                ...form,
-                services: service
-            }) 
+             
         }
     }
+    
 
     const getServices = async () => {
         try {
@@ -112,9 +110,12 @@ export const AddWarehousePage = () => {
     useEffect(() => {
         getServices()
         getBranches()
+        setForm({
+            ...form,
+            services: service
+        })
         console.log(form);
-        console.log(service);
-    }, [form,service])
+    }, [service])
 
     return (
         <>
@@ -123,7 +124,7 @@ export const AddWarehousePage = () => {
                 <h1 className="h2">Add Warehouse</h1>
             </div>
 
-            <Link to={'/dashboard/warehouse'}>
+            <Link to={'/dashboard/warehouses'}>
                 <button type="submit" className="btn btn-danger m-2"> Cancel</button>
             </Link>
             <button className="btn btn-success m-2 bi bi-plus-circle" onClick={(e) => add(e)} > Create Warehouse</button>
@@ -171,7 +172,7 @@ export const AddWarehousePage = () => {
 
                 <div className="form-outline mb-3">
                     <select className="form-select select-input" name='services' onChange={handleChangeServices}>
-                        <option defaultValue={null}>Select services</option>
+                        <option>Select services</option>
                         {
                             services?.map(({ _id, name, price }, index) => {
                                 return (
