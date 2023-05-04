@@ -16,6 +16,9 @@ import { UpdateServicePage } from './pages/Service/UpdateServicePage'
 import { BranchPage } from './pages/Branch/BranchPage'
 import { AddBranchPage } from './pages/Branch/AddBranch'
 import { UpdateBranchPage } from './pages/Branch/Updatebranch'
+import { AddWarehousePage } from './pages/Warehouse/AddWarehousePage'
+import { ViewWarehousePage } from './pages/Warehouse/ViewWarehousePage'
+import { AssignWarehousePage } from './pages/Warehouse/AssignWarehousePage'
 
 export const AuthContext = createContext()
 
@@ -58,6 +61,18 @@ export const Index = () => {
                         {
                             path: 'users',
                             element: <UserPage/>
+                        },
+                        {
+                            path: 'addWarehouse',
+                            element: <AddWarehousePage />
+                        },
+                        {
+                            path: 'viewWarehouse/:id',
+                            element: <ViewWarehousePage />
+                        },
+                        {
+                            path: 'assign-user-warehouse/:id',
+                            element: <AssignWarehousePage />
                         },
                         {
                             path: 'addUser',

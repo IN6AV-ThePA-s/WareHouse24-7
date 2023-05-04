@@ -47,11 +47,28 @@ const wareHouseSchema = mongoose.Schema({
         required: true,
         uppercase: true,
         default: 'ACTIVE',
-        enum: ['ACTIVE', 'DISABLE']
+        enum: ['ACTIVE', 'DISABLE', 'LEASED']
+    },
+    branch: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Branche',
+        required: true
     },
     lessee: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
+    },
+    additionalService: {
+        type: [{
+            service: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Service'
+            }
+
+        }]
+    },
+    price: {
+        type: Number
     },
     photo: {
         type: String
