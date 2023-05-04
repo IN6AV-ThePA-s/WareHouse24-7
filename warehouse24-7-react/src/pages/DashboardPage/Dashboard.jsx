@@ -33,7 +33,7 @@ export const Dashboard = () => {
 
             <header className="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow sticky-top justify-content align-items-center">
                 {/* <img className='ms-3' src={logo} width='35px' height='35px' /> */}
-                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{ backgroundColor: '#ffffff' }}>
+                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{backgroundColor: '#000000'}}>
                     <Link className="brush">WH 24/7</Link>
                 </div>
                 <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" onClick={() => setOpen(!open)}
