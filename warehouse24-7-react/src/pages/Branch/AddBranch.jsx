@@ -57,13 +57,16 @@ export const AddBranchPage = () => {
             const { data } = await axios.post('http://localhost:3022/branch/add', form, { headers: headers })
             if(photo)await axios.put(`http://localhost:3022/branch/uploadImg/${data.branch._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
 
-            Swal.fire({
-                title: data.message,
-                icon: 'success',
-                timer: 2000,
-                showConfirmButton: false
-            })
-            location.reload()
+            if(data.message){
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
+                navigate('/dashboard/branches')
+            }
+            
             
         } catch (err) {
             Swal.fire(err.response.data.message, '', 'error')

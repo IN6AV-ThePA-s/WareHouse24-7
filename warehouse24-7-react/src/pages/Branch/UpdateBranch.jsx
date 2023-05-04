@@ -60,7 +60,7 @@ export const UpdateBranchPage = () => {
                     timer: 2000,
                     showConfirmButton: false
                 })
-                location.reload()
+                navigate('/dashboard/branches')
             }
             
             
