@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import photo from '../../assets/property-1.jpg'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card } from '../../components/CardUser'
+import { CardUser } from '../../components/CardUser'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -78,7 +78,7 @@ export const UserPage = () => {
                 {
                     user.map((u, index) => {
                         return (
-                            <Card 
+                            <CardUser 
                                 key={index} 
                                 name={u.names} 
                                 surname={u.surnames} 
@@ -89,7 +89,7 @@ export const UserPage = () => {
                                 headers={headers}
                                 id={u._id}
                                 butDel={()=>del(u._id)}
-                                butEdit={()=>navigate(`/dashboard/updateUser/${u._id}`)}
+                                butEdit={`/dashboard/updateUser/${u._id}`}
                             />
                         )
                     })

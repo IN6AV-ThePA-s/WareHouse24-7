@@ -4,6 +4,7 @@ import photo from '../../assets/property-1.jpg'
 import { Link, useNavigate } from 'react-router-dom'
 import { Card } from '../../components/CardBranch'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const BranchPage = () => {
     const [branch, setBranch] = useState([{}])
@@ -16,13 +17,25 @@ export const BranchPage = () => {
 
     const del = async(id) => {
         try {
-            let confirmDel = confirm('Are you sure to delete this branch?')
-            if(confirmDel){
-                const { data } = await axios.delete(`http://localhost:3022/branch/delete/${id}`, {headers: headers})
-                getBranches()
-                alert(`${data.message}`)
-            }
+            Swal.fire({
+                title: 'Are you sure to delete this branch?',
+                icon: 'question',
+                showConfirmButton: true,
+                showDenyButton: true,
+            }).then(async(result)=>{
+                if(result.isConfirmed) {
+                    const { data } = await axios.delete(`http://localhost:3022/branch/delete/${id}`, {headers: headers}).catch(
+                            (err)=>{
+                                Swal.fire(err.response.data.message, '', 'error')
+                            })
+                    getBranches()
+                    Swal.fire(`${data.message}`, '', 'success')
+                } else {
+                    Swal.fire('No worries!', '', 'success')
+                }
+            })
         } catch (err) {
+            Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
         }
     } 
@@ -40,6 +53,7 @@ export const BranchPage = () => {
             setBranch(data.branches)
             
         } catch (err) { 
+            Swal.fire(err.response.data.message, '', 'error')
             console.log(err)
         }
     }
@@ -73,7 +87,7 @@ export const BranchPage = () => {
                                 id={b._id}
                                 photo={b.photo}
                                 butDel={()=>del(b._id)}
-                                butEdit={()=>navigate(`/dashboard/updateBranch/${b._id}`)}
+                                butEdit={`/dashboard/updateBranch/${b._id}`}
                             />
                         )
                     })

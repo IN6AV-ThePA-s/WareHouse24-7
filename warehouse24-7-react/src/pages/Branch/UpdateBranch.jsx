@@ -3,12 +3,12 @@ import './branchPage.css'
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios'
-import fs from 'fs'
+import Swal from 'sweetalert2'
 
 export const UpdateBranchPage = () => {
     const { id } = useParams()
     const navigate = useNavigate()
-    const [state, setState] = useState('DISABLE')
+    const [state, setState] = useState()
     const [branch, setBranch] = useState({})
     const [photo, setPhoto] = useState()
     const headers = {
@@ -34,9 +34,7 @@ export const UpdateBranchPage = () => {
     const getBranch = async()=>{
         try {
             const { data } = await axios(`http://localhost:3022/branch/get/${id}`, {headers: headers});
-            console.log(data.branch);
             setBranch(data.branch);
-            console.log(branch);
         } catch (err) {
             console.error(err);
         }
@@ -55,9 +53,19 @@ export const UpdateBranchPage = () => {
             const { data } = await axios.put(`http://localhost:3022/branch/update/${id}`, form, { headers: headers })
             if(photo)await axios.put(`http://localhost:3022/branch/uploadImg/${data.updateBranch._id}`, photo, { headers: {'Authorization': localStorage.getItem('token'), 'Content-Type': 'multipart/form-data'} })
 
-            if(data.message) return alert(data.message)
+            if(data.message){
+                Swal.fire({
+                    title: data.message,
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
+                location.reload()
+            }
+            
             
         } catch (err) {
+            Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
         }
     }

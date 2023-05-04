@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 
-export const Card = ({ name, surname, email, username, phone, photo, headers, id, butDel, butEdit }) => {
+export const CardUser = ({ name, surname, email, username, phone, photo, headers, id, butDel, butEdit }) => {
     
     return (
         <div className="card ms-2 mt-2" style={{ width: '18rem' }}>
@@ -18,8 +18,8 @@ export const Card = ({ name, surname, email, username, phone, photo, headers, id
             </ul>
             <div className="card-body text-center">
                 <button className='btn btn-danger bi bi-trash3 ms-1' onClick={(e)=>{e.preventDefault(); butDel()}}> Delete</button>
-                <Link>
-                    <button className='btn btn-warning bi bi-pencil ms-1' onClick={()=>{butEdit()}}> Update</button>
+                <Link to={butEdit}>
+                    <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
                 </Link>
             </div>
         </div>

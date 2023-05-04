@@ -19,8 +19,8 @@ export const Card = ({ name, description, address, capitalGain, state, photo, bu
             </ul>
             <div className="card-body text-center">
                 <button className='btn btn-danger bi bi-trash3 ms-1' onClick={(e)=>{e.preventDefault(); butDel()}}> Delete</button>
-                <Link>
-                    <button className='btn btn-warning bi bi-pencil ms-1' onClick={()=>{butEdit()}}> Update</button>
+                <Link to={butEdit}>
+                    <button className='btn btn-warning bi bi-pencil ms-1'> Update</button>
                 </Link>
             </div>
         </div>
