@@ -65,7 +65,6 @@ export const Dashboard = () => {
                                         Users
                                     </Link>
                                 </li>
-
                                 <li className="nav-item">
                                     <Link className="nav-link bi bi-buildings" to='warehouses'>
                                         <span data-feather="users" className="align-text-bottom"> </span>
@@ -82,10 +81,10 @@ export const Dashboard = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item me-5">
-                                                <a className="nav-link bi bi-shop" href="#">
+                                                <Link className="nav-link bi bi-shop" to={'branches'} >
                                                     <span data-feather="file" className="align-text-bottom"> </span>
                                                     Branchs
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link bi bi-file-bar-graph" href="#" to={'services'}>

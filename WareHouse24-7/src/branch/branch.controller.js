@@ -1,6 +1,5 @@
 'use strict'
 const Branch = require('./branch.model');
-const dataWareHouse = ['type', 'size', 'services']
 const fs = require('fs')
 const path = require('path')
 
@@ -14,7 +13,7 @@ exports.addBranch =async(req, res)=>{
         let data = req.body;
         let branch = new Branch(data);
         await branch.save();
-        return res.send({message: 'Branch added successfully'})
+        return res.send({message: 'Branch added successfully', branch: branch})
     } catch (err) {
         console.error(err);
         return res.status(500).send({message: 'Error adding branches'})
@@ -26,7 +25,7 @@ exports.addBranch =async(req, res)=>{
 exports.getBranches = async(req, res)=>{
     try {
         let branches = await Branch.find();
-        return res.send({branches});
+        return res.send({'branches': branches});
     } catch (err) {
         console.error(err);
         return res.status(500).send({message: 'Error getting branches'})
@@ -37,9 +36,9 @@ exports.getBranches = async(req, res)=>{
 exports.getBranch = async(req, res)=>{
     try {
         let branchId = req.params.id;
-        let branch = await Branch.findOne({_id: branchId}).populate('warehouses.warehouse', dataWareHouse)
+        let branch = await Branch.findOne({_id: branchId})
         if(!branch) return res.status(404).send({message: 'Couldnt found the branch'})
-        return res.send({message: 'Branch found', branch});
+        return res.send({message: 'Branch found', branch: branch});
     } catch (err) {
         console.error(err);
         return res.status(500).send({message: 'Error getting this branch'})
@@ -55,7 +54,7 @@ exports.updatedBranch = async(req, res)=>{
             {_id: branchId},
             data,
             {new: true}
-        ).populate('warehouses.warehouse', dataWareHouse)
+        )
         if(!updateBranch) return res.status(404).send({message: 'Couldnt find and update the branch'})
         return res.send({message: 'Branch updated: ',updateBranch})
     } catch (err) {
@@ -93,23 +92,6 @@ exports.deleteBranch = async(req, res)=>{
     }
 }
 
-/* ----- ADD WAREHOUSES ----- */
-exports.addWareHouses = async(req, res)=>{
-    try {
-        let data = req.body;
-        let branchId = req.params.id;
-        let addWareHouses = await Branch.findOneAndUpdate(
-            {_id: branchId},
-            {$push: {warehouses: data.warehouses}},
-            {new: true}
-        ).populate('warehouses.warehouse', dataWareHouse)
-        if(!addWareHouses) return res.status(418).send({message: 'Couldnt find and update the Branch'})
-        return res.send({addWareHouses})
-    } catch (err) {
-        console.error(err);
-        return res.status(500).send({message: 'Error adding warehouses'})
-    }
-}
 
 
 /* ----- ADD PHOTOS ----- */

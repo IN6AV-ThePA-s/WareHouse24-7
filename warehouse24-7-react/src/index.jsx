@@ -13,6 +13,9 @@ import { WarehousePage } from './pages/Warehouse/WarehousePage'
 import { ServicePage } from './pages/Service/ServicePage'
 import { AddServicePage } from './pages/Service/AddServicePage'
 import { UpdateServicePage } from './pages/Service/UpdateServicePage'
+import { BranchPage } from './pages/Branch/BranchPage'
+import { AddBranchPage } from './pages/Branch/AddBranch'
+import { UpdateBranchPage } from './pages/Branch/Updatebranch'
 
 export const AuthContext = createContext()
 
@@ -78,6 +81,15 @@ export const Index = () => {
                         },{
                             path: 'updateUser/:id',
                             element: <UpdateUserPage/>
+                        },{
+                            path: 'branches',
+                            element: <BranchPage/>
+                        },{
+                            path: 'addBranch',
+                            element: <AddBranchPage/>
+                        },{
+                            path: 'updateBranch/:id',
+                            element: <UpdateBranchPage/>
                         }
                     ]
                 }
