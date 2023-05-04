@@ -73,7 +73,7 @@ export const WarehousePage = () => {
                     Swal.fire('No worries!', '', 'success')
                 }
             })
-        } catch (err) {
+        } catch (err) { 
             Swal.fire(err.response.data.message, '', 'error')
             console.error(err)
         }
@@ -127,6 +127,7 @@ export const WarehousePage = () => {
                                             <>
                                                 <li className="list-group-item">State: {warehouse.state}</li>
                                                 <li className="list-group-item">lessee: {warehouse?.lessee ? `${warehouse?.lessee?.names} ${warehouse?.lessee?.surnames}` : 'No assigned'}</li>
+                                                <li className="list-group-item">lessee: {`Q. ${Number(warehouse.price).toFixed(2)}`}</li>
                                             </>
                                         )
                                         : ''

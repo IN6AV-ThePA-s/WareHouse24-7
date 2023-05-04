@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import logo from '../../assets/logo.png'
 import photo from '../../assets/property-1.jpg'
 import { Link, useNavigate } from 'react-router-dom'
-import { CardUser } from '../../components/CardUser'
+import { Card } from '../../components/CardBranch'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-export const UserPage = () => {
-    const [user, setUser] = useState([{}])
-    const [photo, setPhoto] = useState([])
+export const BranchPage = () => {
+    const [branch, setBranch] = useState([{}])
+    const [photo, setPhoto] = useState()
     const headers = {
         'Content-Type': 'application/json',
         'Authorization' : localStorage.getItem('token')
@@ -18,17 +18,17 @@ export const UserPage = () => {
     const del = async(id) => {
         try {
             Swal.fire({
-                title: 'Are you sure to delete this user?',
+                title: 'Are you sure to delete this branch?',
                 icon: 'question',
                 showConfirmButton: true,
                 showDenyButton: true,
             }).then(async(result)=>{
                 if(result.isConfirmed) {
-                    const { data } = await axios.delete(`http://localhost:3022/user/delete/${id}`, {headers: headers}).catch(
+                    const { data } = await axios.delete(`http://localhost:3022/branch/delete/${id}`, {headers: headers}).catch(
                             (err)=>{
                                 Swal.fire(err.response.data.message, '', 'error')
                             })
-                    getUsers()
+                    getBranches()
                     Swal.fire(`${data.message}`, '', 'success')
                 } else {
                     Swal.fire('No worries!', '', 'success')
@@ -40,18 +40,17 @@ export const UserPage = () => {
         }
     } 
 
-    const getUsers = async() => {
+    const getBranches = async() => {
         try {
-            const { data } = await axios('http://localhost:3022/user/get', {headers: headers})
+            const { data } = await axios('http://localhost:3022/branch/get', {headers: headers})
 
-            for(let i = 0; i < data.users.length; i++){
-                if(data.users[i].photo) {
-                    let img = await axios(`http://localhost:3022/user/getImg/${data.users[i].photo}`, {headers: headers})
-                    data.users[i].photo = img.request.responseURL
-                }
-                continue
+            for(let i = 0; i < data.branches.length; i++){
+                if(data.branches[i].photo){
+                    let img = await axios(`http://localhost:3022/branch/getImg/${data.branches[i].photo}`, {headers: headers})
+                    data.branches[i].photo = img.request.responseURL
+                }continue
             }
-            setUser(data.users)
+            setBranch(data.branches)
             
         } catch (err) { 
             Swal.fire(err.response.data.message, '', 'error')
@@ -60,36 +59,35 @@ export const UserPage = () => {
     }
 
     useEffect(() => {
-        getUsers()
+        getBranches()
     }, [])
 
     return (
         <>
             <div
                 className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 className="h2">Users</h1>
-                <Link to='/dashboard/addUser'>
-                    <button className='btn btn-success me-5 bi bi-plus-circle'> Add User</button>
+                <h1 className="h2">Branch</h1>
+                <Link to='/dashboard/addBranch'>
+                    <button className='btn btn-success border border-dark me-5 bi bi-plus-circle'> Add Branch</button>
                 </Link>
                 
             </div>
 
             <div className='col-md-9 ms-sm-auto col-lg-10 px-md-4 d-flex flex-wrap mb-3 mt-3'>
                 {
-                    user.map((u, index) => {
+                    branch.map((b, index) => {
                         return (
-                            <CardUser 
+                            <Card 
                                 key={index} 
-                                name={u.names} 
-                                surname={u.surnames} 
-                                phone={u.phone}
-                                email={u.email}
-                                username={u.username}
-                                photo={u.photo}
-                                headers={headers}
-                                id={u._id}
-                                butDel={()=>del(u._id)}
-                                butEdit={`/dashboard/updateUser/${u._id}`}
+                                name={b.name}
+                                description={b.description}
+                                address={b.address}
+                                capitalGain={b.capitalGain}
+                                state={b.state}
+                                id={b._id}
+                                photo={b.photo}
+                                butDel={()=>del(b._id)}
+                                butEdit={`/dashboard/updateBranch/${b._id}`}
                             />
                         )
                     })

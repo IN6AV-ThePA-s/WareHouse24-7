@@ -33,7 +33,7 @@ export const Dashboard = () => {
 
             <header className="navbar navbar-dark bg-dark flex-md-nowrap p-0 shadow sticky-top justify-content align-items-center">
                 {/* <img className='ms-3' src={logo} width='35px' height='35px' /> */}
-                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{ backgroundColor: '#ffffff' }}>
+                <div className='navbar-nav navbar-brand col-md-3 col-lg-2 me-0 px-3' style={{backgroundColor: '#000000'}}>
                     <Link className="brush">WH 24/7</Link>
                 </div>
                 <button className="navbar-toggler position-absolute d-md-none collapsed" type="button" onClick={() => setOpen(!open)}
@@ -65,7 +65,6 @@ export const Dashboard = () => {
                                         Users
                                     </Link>
                                 </li>
-
                                 <li className="nav-item">
                                     <Link className="nav-link bi bi-buildings" to='warehouses'>
                                         <span data-feather="users" className="align-text-bottom"> </span>
@@ -82,10 +81,10 @@ export const Dashboard = () => {
                                                 </a>
                                             </li>
                                             <li className="nav-item me-5">
-                                                <a className="nav-link bi bi-shop" href="#">
+                                                <Link className="nav-link bi bi-shop" to={'branches'} >
                                                     <span data-feather="file" className="align-text-bottom"> </span>
                                                     Branchs
-                                                </a>
+                                                </Link>
                                             </li>
                                             <li className="nav-item">
                                                 <Link className="nav-link bi bi-file-bar-graph" href="#" to={'services'}>

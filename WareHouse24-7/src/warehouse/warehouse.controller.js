@@ -2,6 +2,7 @@
 
 const WareHouse = require("./warehouse.model");
 const User = require("../user/user.model");
+const Branch = require("../branch/branch.model");
 const Service = require("../service/service.model");
 const { validateData } = require("../utils/validate");
 const fs = require("fs");
@@ -12,7 +13,23 @@ const { log } = require("console");
 exports.add = async (req, res) => {
   try {
     let data = req.body;
+    let total = 0,t=0;
     data.size.area = Number(data.size.heigth * data.size.length).toFixed(2);
+    let { capitalGain } = await Branch.findOne({ _id: data.branch });
+    capitalGain = Number(capitalGain / 100).toFixed(2);
+    console.log(data.price);
+    let subtotal = Number(
+      Number(data.price) + Number(data.price) * capitalGain
+    ).toFixed(2);
+    console.log(data.price);
+    data.price = subtotal;
+    console.log(data.price);
+    for (let service of data.services) {
+      let { price } = await Service.findOne({ _id: service.service });
+      total = Number(total + price).toFixed(2);
+    }
+    t = Number(data.price) + Number(total);
+    data.price = Number(t).toFixed(2);
     let warehouse = new WareHouse(data);
     await warehouse.save();
     return res.send({ message: `The warehouse was added`, warehouse });
@@ -163,7 +180,7 @@ exports.deallocate = async (req, res) => {
       let w = await Service.findOne({ _id: service.service });
       total = Number(total + w.price);
     }
-    total = total*-1
+    total = total * -1;
     let updWare = await WareHouse.findOneAndUpdate(
       {
         _id: idWarehouse,
