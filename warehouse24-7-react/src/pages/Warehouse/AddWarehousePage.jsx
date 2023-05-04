@@ -54,15 +54,7 @@ export const AddWarehousePage = () => {
         let data = {
             service: e.target.value
         }
-        let bandera = false
-        for(let s of service){
-            console.log(s);
-            if(s.service == data.service)
-                bandera = false;
-            else
-                bandera = true
-        }
-        if(bandera){
+        if(!service.includes(data.service)){
             setService([...service, data])
             setForm({
                 ...form,
