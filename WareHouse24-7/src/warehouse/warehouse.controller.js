@@ -14,7 +14,7 @@ exports.add = async (req, res) => {
   try {
     let data = req.body;
     let total = 0,t=0;
-    data.size.area = Number(data.size.heigth * data.size.length).toFixed(2);
+    data.size.area = Number(data.size.depth * data.size.length).toFixed(2);
     let { capitalGain } = await Branch.findOne({ _id: data.branch });
     capitalGain = Number(capitalGain / 100).toFixed(2);
     console.log(data.price);
@@ -49,7 +49,7 @@ exports.gets = async (req, res) => {
         select: "names surnames phone",
       })
       .populate("branch")
-      .populate("additionalService");
+      .populate("additionalService.service");
     return res.send({ warehouses });
   } catch (err) {
     console.error(err);

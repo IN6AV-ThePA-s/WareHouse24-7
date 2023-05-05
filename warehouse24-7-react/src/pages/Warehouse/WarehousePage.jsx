@@ -52,6 +52,11 @@ export const WarehousePage = () => {
                 } else {
                     Swal.fire('No worries!', '', 'success')
                 }
+            }).catch((err)=>{
+                Swal.fire({
+                    title: `The warehouse cannot be deleted as it is leased`,
+                    timer: 1000,
+                })
             })
         } catch (err) {
             //console.error(err)
@@ -78,6 +83,8 @@ export const WarehousePage = () => {
                 } else {
                     Swal.fire('No worries!', '', 'success')
                 }
+            }).catch(async (err)=>{
+                Swal.fire(err.response.data.message, '', 'error')
             })
         } catch (err) {
             Swal.fire(err.response.data.message, '', 'error')
@@ -87,7 +94,7 @@ export const WarehousePage = () => {
 
     const search = (e) => {
         let sear = e.target.value
-        let condition = new RegExp(sear)
+        let condition = new RegExp(sear,'i')
         let ware = warehouses.filter((a) => {
             return condition.test(a.type)
         })
@@ -172,7 +179,7 @@ export const WarehousePage = () => {
                                                 <li className="list-group-item">Additional Services: {
                                                     warehouse.additionalService?.map((service) => {
                                                         return (
-                                                            `${service.service.name}`
+                                                            `${service.service.name}, `
                                                         )
                                                     })
                                                 }</li>
@@ -218,9 +225,6 @@ export const WarehousePage = () => {
                                                         </>
                                                     )
                                             }
-                                            <Link to={`/dashboard/viewWarehouse/${warehouse._id}`}>
-                                                <button className='btn btn-success ms-1'> More Info</button>
-                                            </Link>
                                         </div> : ''
                                 }
                             </div>

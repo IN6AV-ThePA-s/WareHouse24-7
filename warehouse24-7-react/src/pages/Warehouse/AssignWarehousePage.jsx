@@ -31,10 +31,6 @@ export const AssignWarehousePage = () => {
             service: e.target.value
         }
         setService([...service, data])
-        setForm({
-            ...form,
-            additionalService: service
-        })
     }
 
     const getServices = async () => {
@@ -77,7 +73,11 @@ export const AssignWarehousePage = () => {
     useEffect(() => {
         getServices()
         getClients()
-    }, [])
+        setForm({
+            ...form,
+            additionalService: service
+        })
+    }, [service])
 
     return (
         <>
